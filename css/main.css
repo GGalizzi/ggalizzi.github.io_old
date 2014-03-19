@@ -8,13 +8,16 @@
 * {
   margin: 0;
   padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html, body { height: 100%; }
 
 body {
   background-color: #FFF;
-  font: 13.34px Helvetica, Arial, sans-serif;
+  font: 16px 'Open Sans', Helvetica, Arial, sans-serif;
   font-size: small;
   text-align: center;
 }
@@ -23,9 +26,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 100%; }
 
 h1 { margin-bottom: 1em; }
-p { margin: 1em 0; }
+p { margin: 1.1em 0; color: #888;}
 
-a         { color: #00a; }
+a         { color: #00a; text-decoration: none; }
 a:hover   { color: #000; }
 a:visited { color: #a0a; }
 
@@ -56,8 +59,8 @@ a:visited { color: #a0a; }
 /*****************************************************************************/
 
 .site {
-  font-size: 115%;
-  text-align: justify;
+  font-size: 180%;
+  text-align: left;
   width: 42em;
   margin: 3em auto 2em;
   line-height: 1.5em;
@@ -69,12 +72,17 @@ a:visited { color: #a0a; }
 }
 
 .title {
+  font-color: #444;
+  font-size: 220%;
+  text-align: center;
+  line-height: 1.4em;
+  text-transform: uppercase;
   display: inline-block;
   margin-bottom: 2em;
 }
 
 .title a {
-  color: #a00;
+  color: #3589C0;
 }
 
 .title a:hover {
@@ -129,9 +137,10 @@ a:visited { color: #a0a; }
 
 /* standard */
 .post pre {
-  border: 1px solid #ddd;
-  background-color: #eef;
+  border: 1px solid #444;
+  background-color: #222;
   padding: 0 .4em;
+  color: #fff;
 }
 
 .post ul, .post ol {
@@ -140,8 +149,9 @@ a:visited { color: #a0a; }
 
 .post code {
   border: 1px solid #ddd;
-  background-color: #eef;
   padding: 0 .2em;
+  font-family: monospace;
+  font-size: 0.8em;
 }
 
 .post pre code {
@@ -157,4 +167,8 @@ a:visited { color: #a0a; }
 
 .post pre.terminal code {
   background-color: #333;
+}
+
+.asciicast iframe {
+  margin: 0 auto !important;
 }

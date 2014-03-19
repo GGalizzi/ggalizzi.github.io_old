@@ -1,0 +1,94 @@
+---
+layout: post
+title: "Agilizando la escritura de HTML con Emmet"
+date: 2014-03-19 16:00:00
+categories: emmet vim html
+---
+
+<script type="text/javascript" src="https://asciinema.org/a/8289.js" id="asciicast-8289" async></script>
+
+Escribir HTML puede ser algo extremadamente rápido si usas [Emmet](http://emmet.io), un plugin para varios editores de textos y IDEs, como Sublime Text, Eclipse, TextMate, Brackets, NetBeans, Notepad++, VIM, y muchos otros.
+
+La [documentación de emmet](http://docs.emmet.io/) es muy completa y altamente recomendada de leer.
+
+Como introducción intentemos escribir una pagina básica.
+
+{% highlight html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <h1 class="title">Bienvenidos a mi pagina</h1>
+  <p class="intro">Acá podes encontrar información sobre los siguientes temas:</p>
+  <ul class="nav">
+    <li><a href="">Item 1</a></li>
+    <li><a href="">Item 2</a></li>
+    <li><a href="">Item 3</a></li>
+    <li><a href="">Item 4</a></li>
+    <li><a href="">Item 5</a></li>
+  </ul>
+  
+</body>
+</html>
+{% endhighlight %}
+
+Todo esto, lo podes escribir de manera muy rápida usando las siguientes abreviaciones de emmet:
+
+`html:5>h1.title{Bienvenidos a mi pagina}+p.intro{Acá podes encontrar información sobre los siguientes temas:}+ul.nav>li*5>a{Item $}`
+
+Con Emmet, escribís la abreviación y con la tecla de emmet (en mi caso, que uso VIM, como defecto es `ctrl+y+,`), la abreviación se expande al HTML correspondiente.
+
+### Vamos por parte
+
+La primera parte de la abreviación emmet es `html:5`, esta abreviación crea la estructura básica de un documento HTML5.
+
+Por lo tanto expandiendo `html:5` se transforma en esto:
+
+{% highlight html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  
+</body>
+</html>
+{% endhighlight %}
+
+Y al expandirse el cursor se queda dentro del tag `body`, listo para ser editado con mas detalle. Dentro de ese mismo body podemos seguir usando abreviaciones de emmet, en el ejemplo lo hacemos todo en una sola línea. Al usar el operador `>` estamos diciendo que el siguiente elemento será un hijo del anterior. Por lo tanto `html:5>h1.title` indica que el `h1` será hijo del body, además indicamos que `h1` es de la clase `title` con el operador  `.`, también podemos usar `#` para
+indicar un ID.
+
+Luego usamos las llaves `{}` para indicar el texto que va dentro del `h1`, seguimos con el operador `+` que indica hermanos de elementos, por lo tanto p será hermano de `h1`, con clase intro, y el texto que ingresamos dentro de las llaves.
+
+Con esta información ya podemos entender `html:5>h1.title{texto}+p.intro{texto}+ul.nav>li`
+
+Esto se expande a
+
+{% highlight html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <h1 class="title">texto</h1>
+  <p class="intro">texto</p>
+  <ul class="nav">
+    <li></li>
+  </ul>
+  
+</body>
+</html>
+{% endhighlight %}
+
+Para crear varios elementos del mismo tipo, usamos el operador de multiplicación `*`, para decir que queremos varios `li`, finalmente a cada `li` le damos un hijo `a` con el texto `Item $`.
+
+El operador `$` se usa luego de usar el operador de multiplicación, que convierte su valor al número que corresponde del elemento.
+
+

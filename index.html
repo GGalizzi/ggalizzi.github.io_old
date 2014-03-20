@@ -7,7 +7,14 @@ title: GGalizzi Blog - Diseño y programación de aplicaciones Web
   <h1>Posts</h1>
   <ul class="posts">
     {% for post in site.posts %}
-      <li><span>{{ post.date | date: "%-d/%m/%Y" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
+    <li>
+      <span>{{ post.date | date: "%-d/%m/%Y" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+      <ul class="categories">
+        {% for category in post.categories %}
+        <li><span>{{ category }}</span></li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </li>
   </ul>
 </div>

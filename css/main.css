@@ -28,9 +28,13 @@ h1, h2, h3, h4, h5, h6 {
 h1 { margin-bottom: 1em; }
 p { margin: 1.1em 0; color: #888;}
 
-a         { color: #00a; text-decoration: none; }
-a:hover   { color: #000; }
-a:visited { color: #a0a; }
+a {
+  color: #5A5AFF; text-decoration: none; 
+  transition: all 0.5s ease;
+}
+
+a:hover   { color: #555; }
+a:visited { color: #A4A; }
 
 /*****************************************************************************/
 /*
@@ -52,6 +56,22 @@ a:visited { color: #a0a; }
   font-size: 80%;
 }
 
+.categories {
+  margin-left: 1em;
+  display: inline-block;
+  font-size: 60%;
+  color: #999;
+}
+
+.categories:before {
+  content: "Tags:";
+  color: #999;
+}
+
+.categories li {
+  list-style: none;
+  display: inline-block;
+}
 /*****************************************************************************/
 /*
 /* Site
@@ -66,6 +86,8 @@ a:visited { color: #a0a; }
   line-height: 1.5em;
 }
 
+
+
 .header {
   border-bottom: 4px solid #eee;
   margin-bottom: 0.5em;
@@ -73,6 +95,24 @@ a:visited { color: #a0a; }
 .header a {
   font-weight: bold;
   text-decoration: none;
+}
+
+.logo {
+  display: inline-block;
+  font-size: 210%;
+  line-height: 1.4em;
+}
+
+.logo a {
+  color: #F8F3EF;
+  background-color: #222;
+  border-radius: 100%;
+  padding: .2em;
+}
+
+.logo a:hover {
+  background-color: #FFF;
+  color: #AAA;
 }
 
 .title {

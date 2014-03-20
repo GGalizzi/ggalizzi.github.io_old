@@ -66,6 +66,10 @@ a:visited { color: #a0a; }
   line-height: 1.5em;
 }
 
+.header {
+  border-bottom: 4px solid #eee;
+  margin-bottom: 0.5em;
+}
 .header a {
   font-weight: bold;
   text-decoration: none;
@@ -92,6 +96,7 @@ a:visited { color: #a0a; }
 .header a.extra {
   color: #aaa;
   margin-left: 1em;
+  font-size: 80%;
 }
 
 .header a.extra:hover {
@@ -157,6 +162,7 @@ a:visited { color: #a0a; }
 .post pre code {
   border: none;
 }
+
 
 /* terminal */
 .post pre.terminal {

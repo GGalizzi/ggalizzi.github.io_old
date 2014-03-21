@@ -56,6 +56,10 @@ li li {
   margin-left: 1em;
 }
 
+.posts li li {
+  margin-left: 0;
+}
+
 /*****************************************************************************/
 /*
 /* Home
@@ -68,24 +72,20 @@ li li {
 }
 
 .posts a {
-  font-size: 1.3em;
+  font-size: 1.6em;
+  line-height: 1.2em;
   display: block;
 }
 
 .posts li {
-  line-height: 1.75em;
-  margin-bottom: 2em;
 }
 
-.posts span {
-  color: #aaa;
-  font-size: 80%;
-  display: block;
+.posts > li {
+  margin-bottom: 2em;
 }
 
 .categories {
   margin-left: 1em;
-  display: inline-block;
   font-size: 80%;
   color: #999;
 }
@@ -93,6 +93,22 @@ li li {
 .categories li {
   list-style: none;
   display: inline-block;
+}
+
+.categories-in-post {
+  font-size: 0.7em;
+  text-align: center;
+  display: block;
+}
+
+.categories-in-post li {
+  list-style: none;
+  display: inline-block;
+  color: #aaa;
+}
+
+.categories-in-post li span {
+  color: #fc0;
 }
 /*****************************************************************************/
 /*
@@ -110,41 +126,6 @@ li li {
   line-height: 1.4em;
 }
 
-@media all and (min-width: 280px) {
-  .site {
-    font-size: 120%;
-  }
-
-  .logo {
-    float: left;
-  }
-
-  .nav {
-    float: right;
-  }
-}
-
-@media all and (min-width: 780px) {
-  .site {
-    font-size: 140%;
-    width: 35em;
-    padding: none;
-    margin: 3em auto 2em;
-  }
-
-}
-
-@media all and (min-width: 1024px) {
-  .site {
-    width: 100%;
-    max-width: 45em;
-    font-size: 145%;
-  }
-
-  .post {
-    padding: 3em;
-  }
-}
 
 .header {
   background-color: #222;
@@ -192,12 +173,11 @@ li li {
 
 .title {
   color: #444;
-  font-size: 220%;
+  font-size: 1.8em;
   font-weight: 300;
   text-align: center;
   line-height: 1.4em;
   text-transform: uppercase;
-  display: inline-block;
 }
 
 .title a {
@@ -222,6 +202,10 @@ li li {
 
 .meta {
   color: #aaa;
+  font-size: 0.7em;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 2em;
 }
 
 .footer {
@@ -320,3 +304,57 @@ li li {
 .fourohfour p:first-of-type {
   font-size: 5em;
 }
+
+
+/****************************/
+/***** Media Queries ********/
+/****************************/
+
+@media all and (min-width: 280px) {
+  .site {
+    font-size: 120%;
+  }
+
+  .logo {
+    float: left;
+  }
+
+  .nav {
+    float: right;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+}
+
+@media all and (min-width: 780px) {
+  .site {
+    font-size: 140%;
+    width: 35em;
+    padding: none;
+    margin: 3em auto 2em;
+  }
+
+  .title {
+    font-size: 2.4em;
+  }
+
+}
+
+@media all and (min-width: 1024px) {
+  .site {
+    width: 100%;
+    max-width: 45em;
+    font-size: 145%;
+  }
+
+  .post {
+    padding: 3em;
+  }
+
+  .title {
+    font-size: 2.8em;
+  }
+}
+

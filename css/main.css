@@ -85,13 +85,23 @@ a:visited { color: #A4A; }
 /*****************************************************************************/
 
 .site {
-  font-size: 120%;
+  font-size: 110%;
   text-align: left;
   width: 100%;
   max-width: 36em;
   padding: 0 1em;
   margin: 2em auto;
- line-height: 1.4em;
+  line-height: 1.4em;
+}
+
+@media all and (min-width: 280px) {
+  .site {
+    font-size: 120%;
+  }
+
+  .logo {
+    float: left;
+  }
 }
 
 @media all and (min-width: 780px) {
@@ -101,6 +111,7 @@ a:visited { color: #A4A; }
     padding: none;
     margin: 3em auto 2em;
   }
+
 }
 
 @media all and (min-width: 1024px) {
@@ -138,7 +149,6 @@ a:visited { color: #A4A; }
 .logo {
   font-family: 'Clicker Script', sans-serif;
   font-size: 3em;
-  float: left;
   margin-bottom: 0;
 }
 
@@ -273,6 +283,12 @@ a:visited { color: #A4A; }
 
 .asciicast iframe {
   margin: 0 auto !important;
+}
+
+@media all and (max-width: 566px) {
+  .asciicast {
+    display: none !important;
+  }
 }
 
 

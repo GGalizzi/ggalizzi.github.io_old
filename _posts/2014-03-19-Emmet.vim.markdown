@@ -37,7 +37,9 @@ Como introducción intentemos escribir una pagina básica.
 
 Todo esto, lo podes escribir de manera muy rápida usando las siguientes abreviaciones de emmet:
 
-`html:5>h1.title{Bienvenidos a mi pagina}+p.intro{Acá podes encontrar información sobre los siguientes temas:}+ul.nav>li*5>a{Item $}`
+`html:5>h1.title{Bienvenidos a mi pagina}
++p.intro{Acá podes encontrar información sobre los siguientes temas:}
++ul.nav>li*5>a{Item $}`
 
 Con Emmet, escribís la abreviación y con la tecla de emmet (en mi caso, que uso VIM, como defecto es `ctrl+y+,`), la abreviación se expande al HTML correspondiente.
 
@@ -65,7 +67,10 @@ indicar un ID.
 
 Luego usamos las llaves `{}` para indicar el texto que va dentro del `h1`, seguimos con el operador `+` que indica hermanos de elementos, por lo tanto p será hermano de `h1`, con clase intro, y el texto que ingresamos dentro de las llaves.
 
-Con esta información ya podemos entender `html:5>h1.title{texto}+p.intro{texto}+ul.nav>li`
+Con esta información ya podemos entender
+
+ `html:5>h1.title{texto}
++p.intro{texto}+ul.nav>li`
 
 Esto se expande a
 

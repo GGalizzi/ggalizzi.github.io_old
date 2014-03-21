@@ -30,7 +30,7 @@ layout: nil
     {% if post.sitemap.priority %}
     <priority>{{ post.sitemap.priority }}</priority>
     {% else %}
-    <priority>0.5</priority>
+    <priority>1.0</priority>
     {% endif %}
   </url>
   {% endfor %}

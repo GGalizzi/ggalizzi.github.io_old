@@ -2,3 +2,4 @@ name: GGalizzi Blog
 markdown: redcarpet
 pygments: true
 url: http://ggalizzi.com
+permalink: /:title

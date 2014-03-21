@@ -12,7 +12,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
     {% include analytics.html %}
@@ -20,12 +19,15 @@
   </head>
   <body>
 
+    <div class="header">
+      <h1 class="logo"><a href="/">G</a></h1>
+      <ul class="nav">
+        <li><a class="extra" href="/">Home</a></li>
+        <li><a class="extra" href="/about/">Sobre Mi</a></li>
+      </ul>
+    </div>
+
     <div class="site">
-      <div class="header">
-        <h1 class="logo"><a href="/">GG</a></h1>
-        <a class="extra" href="/">Home</a>
-        <a class="extra" href="/about/">Sobre Mi</a>
-      </div>
 
       {{ content }}
 

@@ -81,7 +81,7 @@ li li {
 }
 
 .posts > li {
-  margin-bottom: 2em;
+  margin-bottom: 3.5em;
 }
 
 .categories {
@@ -310,7 +310,7 @@ li li {
 /***** Media Queries ********/
 /****************************/
 
-@media all and (min-width: 280px) {
+@media all and (min-width: 320px) {
   .site {
     font-size: 120%;
   }

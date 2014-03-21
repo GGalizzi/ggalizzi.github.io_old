@@ -8,17 +8,20 @@ sitemap:
 ---
 
 <div id="home">
-  <h1>Posts</h1>
+  <h1>Artículos</h1>
   <ul class="posts">
     {% for post in site.posts %}
     <li>
-      <span>{{ post.date | date: "%-d/%m/%Y" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
-      <ul class="categories">
+      <span>{{ post.date | date: "%-d/%m/%Y" }} &raquo;</span> <a href="{{ post.url }}">{{ post.title }}</a>
+      <ul class="categories">Tags: 
         {% for category in post.categories %}
         <li><span>{{ category }}</span></li>
-        {% endfor %}
+        {% if category != post.categories.last %}
+        ,
+        {% endif %}
+        {% endfor %} <!-- categories -->
       </ul>
-      {% endfor %}
+      {% endfor %} <!-- post in posts -->
     </li>
   </ul>
 </div>

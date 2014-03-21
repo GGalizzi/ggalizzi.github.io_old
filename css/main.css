@@ -274,3 +274,13 @@ a:visited { color: #A4A; }
 .asciicast iframe {
   margin: 0 auto !important;
 }
+
+
+/*** 404 ***/
+
+.fourohfour {
+  text-align: center;
+}
+.fourohfour p:first-of-type {
+  font-size: 5em;
+}

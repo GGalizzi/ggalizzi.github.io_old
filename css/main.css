@@ -162,14 +162,13 @@ a:visited { color: #A4A; }
 }
 
 .title {
-  font-color: #444;
+  color: #444;
   font-size: 220%;
   font-weight: 300;
   text-align: center;
   line-height: 1.4em;
   text-transform: uppercase;
   display: inline-block;
-  font-weight: normal;
 }
 
 .title a {

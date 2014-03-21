@@ -16,9 +16,6 @@ sitemap:
       <ul class="categories">Tags: 
         {% for category in post.categories %}
         <li><span>{{ category }}</span></li>
-        {% if category != post.categories.last %}
-        ,
-        {% endif %}
         {% endfor %} <!-- categories -->
       </ul>
       {% endfor %} <!-- post in posts -->

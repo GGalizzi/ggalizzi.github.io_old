@@ -5,9 +5,9 @@ date: 2014-03-19 16:00:00
 categories: emmet vim html
 ---
 
-<script type="text/javascript" src="https://asciinema.org/a/8289.js" id="asciicast-8289" async></script>
-
 Escribir HTML puede ser algo extremadamente rápido si usas [Emmet](http://emmet.io), un plugin para varios editores de textos y IDEs, como Sublime Text, Eclipse, TextMate, Brackets, NetBeans, Notepad++, VIM, y muchos otros.
+
+<script type="text/javascript" src="https://asciinema.org/a/8289.js" id="asciicast-8289" async></script>
 
 La [documentación de emmet](http://docs.emmet.io/) es muy completa y altamente recomendada de leer.
 

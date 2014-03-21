@@ -70,7 +70,7 @@ También podés simplemente decirle a Node-Webkit que abra tu directorio actual:
 
 Podés también empaquetar Node-Webkit y tu archivo .nw en un ejecutable para el usuario final. Aunque la manera recomendada es distribuir el directorio de tu aplicación junto con Node-Webkit, ya que al ejecutar node-webkit sin opciones o parámetros, buscara un package.json en el mismo directorio, luego simplemente modifica el ejecutable de node-webkit con el nombre que quieras y listo. 
 
-###últimas notas y conclusion
+###Últimas notas y conclusion
 
 Poder crear aplicaciones de escritorio con las tecnologías web es un verdadero placer gracias a Node-Webkit, también podés combinarlo con Frameworks, personalmente creo que [Angular.js](http://angularjs.org/) es una excelente opción para combinarlo con Node-Webkit.
 

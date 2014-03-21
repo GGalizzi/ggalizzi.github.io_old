@@ -12,7 +12,7 @@ sitemap:
   <ul class="posts">
     {% for post in site.posts %}
     <li>
-      <span>{{ post.date | date: "%-d/%m/%Y" }} &raquo;</span> <a href="{{ post.url }}">{{ post.title }}</a>
+      <span>{{ post.date | date: "%-d/%m/%Y" }}</span> <a href="{{ post.url }}">{{ post.title }}</a>
       <ul class="categories">Tags: 
         {% for category in post.categories %}
         <li><span>{{ category }}</span></li>

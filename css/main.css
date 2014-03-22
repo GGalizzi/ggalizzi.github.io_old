@@ -312,7 +312,7 @@ li li {
 
 @media all and (min-width: 320px) {
   .site {
-    line-height: 1.55em;
+    line-height: 1.5em;
   }
 
   .logo {
@@ -347,7 +347,7 @@ li li {
     padding: none;
     margin: 3em auto 2em;
     word-spacing: 2px;
-    line-height: 1.6em;
+    line-height: 1.55em;
   }
 
   .title {
@@ -362,7 +362,6 @@ li li {
     max-width: 42em;
     font-size: 145%;
     word-spacing: 3px;
-    line-height: 1.65em;
   }
 
   .post {

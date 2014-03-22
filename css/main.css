@@ -18,9 +18,8 @@ html, body { height: 100%; }
 
 body {
   background-color: #FFF;
-  font: 16px 'Open Sans', Helvetica, Arial, sans-serif;
-  font-size: small;
-  text-align: center;
+  font: 13px 'Open Sans', Helvetica, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3, h4, h5, h6 {

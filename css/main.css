@@ -116,13 +116,13 @@ li li {
 /*****************************************************************************/
 
 .site {
-  font-size: 110%;
+  font-size: .769230769rem;
   text-align: left;
   width: 100%;
   max-width: 36em;
   padding: 0 1em;
   margin: 2em auto;
-  line-height: 1.4em;
+  line-height: 1.5em;
 }
 
 
@@ -149,6 +149,7 @@ li li {
 .logo {
   font-family: 'Clicker Script', sans-serif;
   font-size: 3em;
+  text-align: center;
   margin-bottom: 0;
 }
 
@@ -311,7 +312,7 @@ li li {
 
 @media all and (min-width: 320px) {
   .site {
-    font-size: 120%;
+    line-height: 1.55em;
   }
 
   .logo {
@@ -327,12 +328,26 @@ li li {
   }
 }
 
+@media all and (min-width: 520px) {
+  .site {
+    font-size: 0.9rem;
+  }
+}
+
+@media all and (min-width: 650px) {
+  .site {
+    font-size: 1rem;
+  }
+}
+
 @media all and (min-width: 780px) {
   .site {
     font-size: 140%;
     width: 35em;
     padding: none;
     margin: 3em auto 2em;
+    word-spacing: 2px;
+    line-height: 1.6em;
   }
 
   .title {
@@ -346,6 +361,8 @@ li li {
     width: 100%;
     max-width: 42em;
     font-size: 145%;
+    word-spacing: 3px;
+    line-height: 1.65em;
   }
 
   .post {

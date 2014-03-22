@@ -14,11 +14,19 @@
   box-sizing: border-box;
 }
 
-html, body { height: 100%; }
+html, body { height: 100%; font-size: 18px; }
+
+/*** Vertical Rythm Grid ****
+html {
+  background-image: linear-gradient(#fff 0, #fff 95%, #f00 95%, #f00 100%);
+  background-size: 100% 1.65em;
+  background-repeat: repeat-y;
+}
+/***************************/
 
 body {
   background-color: #FFF;
-  font: 13px 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
@@ -27,12 +35,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #444;
 }
 
-h1 { margin-bottom: 1em; }
+h1 { font-size: 1.992rem; margin-bottom: 2.618rem; }
 
-h3 { font-size: 1.2em; margin: 1em 0; }
+h3 { font-size: 1.231rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
 
 p { 
-  margin: 1.1em 0;
+  margin-bottom: 1.6rem;
   color: #575757;
 }
 
@@ -58,6 +66,7 @@ li li {
 .posts li li {
   margin-left: 0;
 }
+
 
 /*****************************************************************************/
 /*
@@ -95,8 +104,9 @@ li li {
 }
 
 .categories-in-post {
-  font-size: 0.7em;
+  font-size: 0.761rem;
   text-align: center;
+  margin-bottom: 1rem;
   display: block;
 }
 
@@ -119,7 +129,7 @@ li li {
   font-size: .769230769rem;
   text-align: left;
   width: 100%;
-  max-width: 36em;
+  max-width: 57.813rem;
   padding: 0 1em;
   margin: 2em auto;
   line-height: 1.5em;
@@ -191,7 +201,7 @@ li li {
 .header a.extra {
   color: #F8F3EF;
   margin-left: 2em;
-  font-size: 1.2em;
+  font-size: 1.231rem;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -202,7 +212,7 @@ li li {
 
 .meta {
   color: #aaa;
-  font-size: 0.7em;
+  font-size: 0.761rem;
   font-weight: 300;
   text-align: center;
   margin-bottom: 2em;
@@ -242,18 +252,23 @@ li li {
 /*****************************************************************************/
 
 /* standard */
+.post {
+  margin: 0 auto;
+}
+
 .post pre {
   border: 1px solid #444;
   background-color: #222;
-  padding: .4em;
+  padding: .47em;
   color: #fff;
-  line-height: 1em;
+  line-height: 1rem;
 }
 
 .post > p:first-of-type {
-  font-size: 1.25em;
+  font-size: 1.231rem;
   font-weight: 300;
-  line-height: 1.35em;
+  line-height: 1.618rem;
+  margin-bottom: 1.7rem;
 }
 
 .post ul, .post ol {
@@ -337,21 +352,28 @@ li li {
 @media all and (min-width: 650px) {
   .site {
     font-size: 1rem;
-    line-height: 1.6em;
+    line-height: 1.618rem;
+  }
+
+  .post {
+    max-width: 35.731rem;
   }
 }
 
 @media all and (min-width: 780px) {
   .site {
-    font-size: 140%;
-    width: 35em;
-    padding: none;
-    margin: 3em auto 2em;
+    width: 35.731rem;
+    padding: 0;
+    margin: 2.95rem auto 1.992rem;
     word-spacing: 2px;
   }
 
+  .post {
+    max-width: 35.731rem;
+  }
+
   .title {
-    font-size: 2.4em;
+    font-size: 1.992rem;
   }
 
 }
@@ -359,18 +381,16 @@ li li {
 @media all and (min-width: 1024px) {
   .site {
     width: 100%;
-    max-width: 42em;
-    font-size: 145%;
     word-spacing: 3px;
-    line-height: 1.65em;
   }
 
   .post {
-    padding: 3em;
+    max-width: 35.731rem;
   }
 
   .title {
-    font-size: 2.8em;
+    font-size: 3.222rem;
+    line-height: 3.5rem;
   }
 }
 

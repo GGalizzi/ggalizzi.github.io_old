@@ -1,4 +1,9 @@
-.highlight  { background: #ffffff; font-size: 1em }
+.highlight  {
+  background: #ffffff;
+  font-size: 1rem;
+  padding: 1.1rem;
+  margin-bottom: 2.358rem;
+}
 .highlight pre { overflow-y: auto; }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */

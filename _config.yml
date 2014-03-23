@@ -1,4 +1,5 @@
 name: GGalizzi Blog
+description: Guillermo escribe sobre diseño, desarollo y programación.
 markdown: redcarpet
 pygments: true
 url: http://ggalizzi.com

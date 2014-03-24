@@ -138,6 +138,8 @@ li li {
 .header {
   background-color: #222;
   margin-bottom: 0.5em;
+  height: 3.8rem;
+  line-height: 3.8rem;
 }
 
 .header:after {
@@ -171,12 +173,11 @@ li li {
   color: #fc0;
 }
 
-.nav {
-  padding-top: 1em;
+nav {
   padding-right: 2em;
 }
 
-.nav li {
+nav li {
   display: inline-block;
 }
 
@@ -198,15 +199,17 @@ li li {
 }
 
 .header a.extra {
+  display: block;
   color: #F8F3EF;
-  margin-left: 2em;
-  font-size: 1.231rem;
-  font-weight: bold;
+  padding: 0 .5rem;
+  font-size: 1rem;
   text-transform: uppercase;
+  height: 100%;
 }
 
 .header a.extra:hover {
-  color: #fc0;
+  background-color: #fff;
+  color: #333;
 }
 
 .meta {
@@ -324,6 +327,13 @@ li li {
 /***** Media Queries ********/
 /****************************/
 
+@media all and (max-width: 320px) {
+  .logo { display: none; }
+  nav { text-align: center; }
+  .nav { margin-left: 2rem; }
+  .header a.extra { font-size: 0.8rem; }
+}
+
 @media all and (min-width: 320px) {
   .site {
     line-height: 1.5em;
@@ -333,7 +343,7 @@ li li {
     float: left;
   }
 
-  .nav {
+  nav {
     float: right;
   }
 

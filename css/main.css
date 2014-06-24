@@ -138,6 +138,7 @@ li li {
 .header {
   background-color: #222;
   margin-bottom: 0.5em;
+  height: 3.8rem;
   line-height: 3.8rem;
 }
 
@@ -158,7 +159,7 @@ li li {
 
 .logo {
   font-family: 'Clicker Script', sans-serif;
-  font-size: 3em;
+  font-size: 2.63em;
   text-align: center;
   margin-bottom: 0;
 }

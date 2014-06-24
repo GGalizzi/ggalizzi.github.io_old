@@ -174,7 +174,7 @@ li li {
 }
 
 nav {
-  padding-right: 2em;
+  padding-right: 0;
 }
 
 nav li {
@@ -345,7 +345,7 @@ nav li {
 
   nav {
     float: right;
-    padding: 0;
+    padding: 2em;
   }
 
   .title {
@@ -356,6 +356,10 @@ nav li {
 @media all and (min-width: 520px) {
   .site {
     font-size: 0.9rem;
+  }
+
+  nav {
+    padding: 0;
   }
 
   h1 {

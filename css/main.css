@@ -138,7 +138,6 @@ li li {
 .header {
   background-color: #222;
   margin-bottom: 0.5em;
-  height: 3.8rem;
   line-height: 3.8rem;
 }
 
@@ -346,7 +345,7 @@ nav li {
 
   .title {
     font-size: 2em;
-    text-align: left;
+    text-align: center;
   }
 }
 

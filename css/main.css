@@ -346,6 +346,7 @@ nav li {
 
   .title {
     font-size: 2em;
+    text-align: left;
   }
 }
 
@@ -356,6 +357,10 @@ nav li {
 
   nav {
     padding-right: 2em;
+  }
+
+  nav li {
+    width: 6em;
   }
 
   h1 {

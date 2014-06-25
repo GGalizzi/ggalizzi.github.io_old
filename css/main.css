@@ -204,6 +204,7 @@ nav li {
   color: #F8F3EF;
   padding: 0 .5rem;
   font-size: 1rem;
+  text-align: center;
   text-transform: uppercase;
   height: 100%;
 }

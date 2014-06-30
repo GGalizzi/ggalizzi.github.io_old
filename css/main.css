@@ -37,7 +37,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 1.992rem; margin-bottom: 2.618rem; text-align: center; line-height: 1.5666em; }
 
-h3 { font-size: 1.231rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
+h2 { font-size: 1.331rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
+
+h3 { font-size: 1.131rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
 
 p { 
   margin-bottom: 1.6rem;
@@ -188,7 +190,8 @@ nav li {
   font-weight: 300;
   text-align: center;
   line-height: 1.4em;
-  text-transform: uppercase;
+  font-variant: small-caps;
+  margin: 0 auto;
 }
 
 .title a {
@@ -231,12 +234,16 @@ nav li {
 }
 
 .footer .contact {
-  float: left;
+  min-width: 200px;
   margin-right: 3em;
 }
 
 .footer .contact a {
   color: #8085C1;
+}
+
+.footer .contact p {
+  margin-bottom: 0;
 }
 
 .footer .rss {
@@ -367,6 +374,10 @@ nav li {
   h1 {
     text-align: left;
   }
+
+  .footer .contact {
+    float: left;
+  }
 }
 
 @media all and (min-width: 650px) {
@@ -411,6 +422,7 @@ nav li {
   .title {
     font-size: 3.222rem;
     line-height: 3.5rem;
+    max-width: 75%;
   }
 }
 

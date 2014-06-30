@@ -11,7 +11,7 @@ Con **Node-Webkit** podés escribir aplicaciones de escritorio usando HTML, CSS,
 
 Pero una desventaja común con aplicaciones webs, es que obviamente, necesitan conexión a internet, pero con Node-Webkit ahora podes usar estas poderosas tecnologías web para hacer aplicaciones de escritorio.
 
-Node-Webkit utiliza un browser basado en **Webkit** que fue extendido para poder controlar su interfaz, así permitiéndonos crear una aplicaciones que verdaderamente parezca nativa. Además podés usar funciones de *Node.js*, incrementando la variedad de funciones que podes utilizar para tu aplicación.
+Node-Webkit utiliza un browser basado en **Webkit** que fue extendido para poder controlar su interfaz, así permitiéndonos crear aplicaciones que verdaderamente parezca nativa. Además podés usar funciones de *Node.js*, incrementando la variedad de funciones que podes utilizar para tu aplicación.
 
 
 ###Creando una aplicación simple

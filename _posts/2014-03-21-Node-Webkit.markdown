@@ -7,11 +7,11 @@ categories: nodejs node-webkit
 
 [Node-Webkit](https://github.com/rogerwang/node-webkit) es una aplicación basada en **Chromium** y **Node.js** que te permite escribir aplicaciones nativas usando las tecnologías web.
 
-Con **Node-Webkit** podés escribir aplicaciones de escritorio usando HTML, CSS, JavaScript, y podes usar módulos de Node.js directamente en el DOM. Dado que las tecnologías web cada vez nos otorgan más control sobre nuestras aplicaciones web, esta la posibilidad de hacer aplicaciones de gran complejidad, que en un pasado cercano solo se hubiese pensado que serian cosas solamente posibles con lenguajes usados para hacer aplicaciones de escritorio.
+Con **Node-Webkit** podes escribir aplicaciones de escritorio usando HTML, CSS, JavaScript, y podes usar módulos de Node.js directamente en el DOM. Dado que las tecnologías web cada vez nos otorgan más control sobre nuestras aplicaciones web, esta la posibilidad de hacer aplicaciones de gran complejidad, que en un pasado cercano solo se hubiese pensado que serian cosas solamente posibles con lenguajes usados para hacer aplicaciones de escritorio.
 
 Pero una desventaja común con aplicaciones webs, es que obviamente, necesitan conexión a internet, pero con Node-Webkit ahora podes usar estas poderosas tecnologías web para hacer aplicaciones de escritorio.
 
-Node-Webkit utiliza un browser basado en **Webkit** que fue extendido para poder controlar su interfaz, así permitiéndonos crear aplicaciones que verdaderamente parezca nativa. Además podés usar funciones de *Node.js*, incrementando la variedad de funciones que podes utilizar para tu aplicación.
+Node-Webkit utiliza un browser basado en **Webkit** que fue extendido para poder controlar su interfaz, así permitiéndonos crear aplicaciones que verdaderamente parezca nativa. Además podés usar funciones de *Node.js*, incrementando la variedad de funciones que podés utilizar para tu aplicación.
 
 
 ###Creando una aplicación simple
@@ -20,7 +20,7 @@ Las aplicaciones de node-webkit se crean similarmente a aplicaciones de Node, do
 
 En este directorio también se debe ubicar el archivo **package.json**, donde se describen ciertos aspectos de la aplicación, como el HTML por donde la aplicación debe comenzar, nombre y características de la ventana - tamaño, si deberá tener frames, toolbar, entre otras cosas.
 
-El elemento "main" dentro de este archivo indica el primer archivo HTML que la aplicación debería mostrar, como "index.html", que podrá incluir links a las demas paginas de la aplicación, JavaScript y CSS.
+El elemento "main" dentro de este archivo indica el primer archivo HTML que la aplicación debería mostrar, como "index.html", que podrá incluir links a las demás paginas de la aplicación, JavaScript y CSS.
 
 {% highlight json %}
 {
@@ -40,7 +40,7 @@ El elemento "main" dentro de este archivo indica el primer archivo HTML que la a
 
 ###Usando funciones Node
 
-Podes incluir funciones y módulos de Node facilmente. Al igual que con Node, podes instalar los módulos usando [npm](https://www.npmjs.org).
+Podes incluir funciones y módulos de Node fácilmente. Al igual que con Node, podes instalar los módulos usando [npm](https://www.npmjs.org).
 
 Luego node-webkit puede incluir cualquier módulo que se encuentre en el directorio `node_modules` dentro de tu aplicación.
 
@@ -74,7 +74,7 @@ Podés también empaquetar Node-Webkit y tu archivo .nw en un ejecutable para el
 
 Poder crear aplicaciones de escritorio con las tecnologías web es un verdadero placer gracias a Node-Webkit, también podés combinarlo con Frameworks, personalmente creo que [Angular.js](http://angularjs.org/) es una excelente opción para combinarlo con Node-Webkit.
 
-Podés ver ejemplos de aplicaciones hechas en node-webkit en [el repositorio del mismo](https://github.com/zcbenz/nw-sample-apps).
+Podés ver ejemplos de aplicaciones hechas en node-webkit en [el repositorio del mismo.](https://github.com/zcbenz/nw-sample-apps)
 
 Para que te des una idea de lo que se puede llegar a hacer con Node-Webkit también considera las siguientes aplicaciones:
 
@@ -82,4 +82,4 @@ El juego [Game Dev Tycoon](http://www.greenheartgames.com) esta hecho con Node-W
 
 Y el lector de feeds [Sputnik](http://sputnik.szwacz.com/) también.
 
-Finalmente, si te interesa, podes ver un aplicación que cree en Node-Webkit junto a Angular.js, [Starlogger](https://github.com/GGalizzi/starlogger), hecha para el juego [Starbound](http://playstarbound.com).
+Finalmente, si te interesa, podes ver un aplicación que cree en Node-Webkit junto a Angular.js, [Starlogger](https://github.com/GGalizzi/starlogger), hecha para el juego [Starbound.](http://playstarbound.com)

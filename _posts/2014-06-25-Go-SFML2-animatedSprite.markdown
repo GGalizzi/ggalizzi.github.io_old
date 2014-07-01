@@ -183,3 +183,5 @@ Este se encarga también de indicar que el sprite no esta en estado `isIdle`, os
 Seguramente habrá muchas cosas de corregir, agregar y modificar a lo largo que siga trabajando en este paquete, y que me ire dando cuenta mientras lo utilice para alguno de mis proyectos.
 
 En el siguiente articulo voy a mostrar un pequeño demo de esto.
+
+Si queres comentar sobre esto, o cualquier cosa, hablame [por twitter](http://twitter.com/GuilleGalizzi).

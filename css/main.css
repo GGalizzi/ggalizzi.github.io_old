@@ -121,6 +121,8 @@ li li {
 }
 
 .categories-in-post li {
+  font-family: 'Oswald';
+  font-weight: 300;
   list-style: none;
   display: inline-block;
   color: #aaa;

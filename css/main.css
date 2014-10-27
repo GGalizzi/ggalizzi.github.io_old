@@ -4,7 +4,7 @@
 /*
 /*****************************************************************************/
 
-@import url(http://fonts.googleapis.com/css?family=Clicker+Script|Open+Sans:400italic,400,700,300);
+@import url(http://fonts.googleapis.com/css?family=Clicker+Script|Open+Sans:400italic,400,700,300|Oswald:300,400);
 /* Base elements style && Global Reset */
 * {
   margin: 0;
@@ -31,6 +31,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald', 'Open Sans', Helvetica;
+  font-weight: 400;
+  text-transform: uppercase;
   font-size: 100%;
   color: #444;
 }
@@ -39,7 +42,11 @@ h1 { font-size: 1.992rem; margin-bottom: 2.618rem; text-align: center; line-heig
 
 h2 { font-size: 1.331rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
 
-h3 { font-size: 1.131rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
+h3 {
+  font-family: 'Oswald', Helvetica;
+  font-weight: 400;
+  border-bottom: 3px solid;
+  font-size: 1.131rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
 
 p { 
   margin-bottom: 1.6rem;
@@ -82,6 +89,8 @@ li li {
 }
 
 .posts a {
+  font-family: 'Oswald', Helvetica;
+  font-weight: 400;
   font-size: 1.6em;
   line-height: 1.2em;
   display: block;

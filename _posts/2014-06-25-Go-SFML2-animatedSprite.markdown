@@ -11,7 +11,7 @@ El paquete de Go que uso para SFML es [el de krepa098 en bitbucket](https://bitb
 
 El paquete hasta el momento crea tres estructuras nuevas: `frame`, `animation` y `animatedSprite`.
 
-##Estructura frame
+###Estructura frame
 
 Esta estructura es sencilla, simplemente tiene dos campos.
 
@@ -27,9 +27,9 @@ Esta estructura es sencilla, simplemente tiene dos campos.
 
 Cree esta estructura para que cada frame sepa si puede ser utilizado como parte de una animación idle (osea, cuando el personaje esta "quieto") que se suele usar animaciones de respiración o algo interesante para que quede mas real o simplemente mejor.
 
-###Métodos de frame
+####Métodos de frame
 
-frame tiene un solo método, que es el que usamos para crear un frame.
+Frame tiene un solo método, que es el que usamos para crear un frame.
 
 {% highlight go %}
 func MakeFrame(rect sf.IntRect, canIdle bool) frame {
@@ -38,7 +38,7 @@ func MakeFrame(rect sf.IntRect, canIdle bool) frame {
 }
 {% endhighlight %}
 
-##Estructura animation
+###Estructura animation
 
 Con esta estructura definimos lo siguiente:
 
@@ -63,7 +63,7 @@ Con esta estructura definimos lo siguiente:
 
 Entonces, con esta estructura podemos definir como un sheet de sprites funciona, dándole nombres a cada animación dentro del mismo.
 
-###Métodos de animation
+####Métodos de animation
 
 animation tiene su constructor y un método para asignarle frameSets.
 {% highlight go%}
@@ -82,7 +82,7 @@ func (a *animation) CreateFrameSet(key string, frames ...frame) {
 }
 {% endhighlight %}
 
-##Estructura animatedSprite
+###Estructura animatedSprite
 
 Esta es la principal estructura, obviamente va a incluir un puntero a un `animation`, y además, a través de [embedding](http://golang.org/doc/effective_go.html#embedding), va a utilizar las mismas funciones que un sf.Sprite.
 
@@ -103,7 +103,7 @@ También va a saber si la animación se debería reproducir en su estado idle, c
 
 lastFrameSetPlayed, como se ve, simplemente guarda la `key` del mapa utilizado.
 
-###Métodos de animatedSprite
+####Métodos de animatedSprite
 
 Además del constructor, tenemos los siguientes métodos.
 

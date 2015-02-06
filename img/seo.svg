@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="149.14087"
+   height="149.14087"
+   id="svg3850">
+  <defs
+     id="defs3852">
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="DiamondMend"
+       style="overflow:visible">
+      <path
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 0,-7.0710768 z"
+         transform="matrix(0.4,0,0,0.4,-2.6,0)"
+         id="path6348"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         id="path6251"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="DiamondSstart"
+       style="overflow:visible">
+      <path
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 0,-7.0710768 z"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         id="path6342"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         id="path6269"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" />
+    </marker>
+  </defs>
+  <metadata
+     id="metadata3855">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-66.497018,-149.83759)"
+     id="layer1"
+     style="display:inline">
+    <path
+       d="m 43.525423,16.61017 a 23.661016,23.661016 0 1 1 -47.3220329,0 23.661016,23.661016 0 1 1 47.3220329,0 z"
+       transform="matrix(3.1516157,0,0,3.1516157,78.462473,172.05915)"
+       id="path4689"
+       style="fill:#3498db;fill-opacity:1;stroke:none" />
+    <g
+       transform="translate(-7.8801792,-0.13518259)"
+       id="g5495">
+      <path
+         d="m 231.32494,201.30867 a 50.002552,50.002552 0 1 1 -100.0051,0 50.002552,50.002552 0 1 1 100.0051,0 z"
+         transform="matrix(0.20137212,-0.79492534,0.79492534,0.20137212,-208.13074,271.63996)"
+         id="path3860"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <path
+         d="m 231.32494,201.30867 a 50.002552,50.002552 0 1 1 -100.0051,0 50.002552,50.002552 0 1 1 100.0051,0 z"
+         transform="matrix(0.16882713,-0.66645255,0.66645255,0.16882713,-176.36692,254.89656)"
+         id="path3862"
+         style="fill:#333333;fill-opacity:1;stroke:none" />
+      <rect
+         width="10.5"
+         height="36.25"
+         ry="4.2477064"
+         x="-130.86916"
+         y="157.84796"
+         transform="matrix(0.71593577,-0.69816615,0.69816615,0.71593577,0,0)"
+         id="rect4473"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <rect
+         width="6.25"
+         height="14.75"
+         ry="1.7283771"
+         x="-128.74416"
+         y="149.34796"
+         transform="matrix(0.71593577,-0.69816615,0.69816615,0.71593577,0,0)"
+         id="rect4477"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <g
+         transform="translate(-197.85097,235.02584)"
+         id="g4505">
+        <path
+           d="m 200.86706,-80.248409 c 0,-8.06776 -6.54009,-14.608184 -14.60828,-14.608184 -8.06742,0 -14.6081,6.540424 -14.6081,14.608184 0,3.460353 1.2021,6.635982 3.21193,9.138689 l -0.008,0.0019 11.40378,15.234942 11.40411,-15.234942 -0.007,-0.0019 c 2.00916,-2.502707 3.21126,-5.678336 3.21126,-9.138689 m -14.60828,9.802498 c -5.2459,0 -9.49904,-4.253141 -9.49904,-9.499798 0,-5.245982 4.25314,-9.498784 9.49904,-9.498784 5.24666,0 9.49912,4.252802 9.49912,9.498784 0,5.246657 -4.25246,9.499798 -9.49912,9.499798"
+           id="path4507"
+           style="fill:#cccccc" />
+        <path
+           d="m 186.25887,-94.848405 v 5.412015 c 1.33716,3.4e-4 2.61016,0.277291 3.76432,0.776244 0.83887,0.362547 1.61461,0.842341 2.30628,1.418783 l 0.006,0.0048 4.8e-4,4.79e-4 c 2.08952,1.742413 3.41866,4.364815 3.41866,7.298019 0,2.933371 -1.32957,5.556276 -3.41849,7.298861 l -0.001,0.0014 -0.005,0.0038 c -0.69191,0.576528 -1.46757,1.056571 -2.30695,1.419118 -1.1539,0.499207 -2.42674,0.775991 -3.7639,0.776498 v 14.557375 l 11.39627,-15.218905 -0.005,-0.0024 c 2.00923,-2.502535 3.20821,-5.678169 3.20821,-9.138688 8e-5,-8.063791 -6.52507,-14.601519 -14.59941,-14.607931"
+           id="path4509"
+           style="fill:#f2f2f2" />
+      </g>
+      <path
+         d="m 144.96297,226.1963 a 1.8591995,1.1490486 0 1 1 -3.71839,0 1.8591995,1.1490486 0 1 1 3.71839,0 z"
+         transform="matrix(1.2852465,0,0,2.1538461,-195.51573,-303.7607)"
+         id="path4529"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       id="layer6"
+       style="display:none" />
+    <g
+       transform="matrix(0.24248292,0,0,0.24248292,81.607121,176.17957)"
+       id="g7476">
+      <g
+         transform="translate(-10.785007,-57.10577)"
+         id="g7557">
+        <g
+           transform="translate(-443.24867,-428.66812)"
+           id="g8260">
+          <polyline
+             transform="translate(-195.37935,-484.0742)"
+             style="fill:#d1d1d1"
+             points="296.724,396.766 215.275,396.766 215.275,317.973 296.724,317.973 296.724,396.766   "
+             id="polyline7478" />
+          <path
+             d="m -152.74135,-180.2672 v 30.83 c 0,21.76 18.226,39.11 39.984,39.11 h 347.75 c 21.76,0 38.988,-17.351 38.988,-39.11 v -30.83 h -426.722"
+             id="path7480"
+             style="fill:#ffffff" />
+          <polyline
+             transform="translate(-195.37935,-484.0742)"
+             style="fill:#ffffff"
+             points="311.146,418.013 201.7,418.013 216.175,392.338 296.818,392.338 311.146,418.013   "
+             id="polyline7482" />
+          <rect
+             width="50.463001"
+             height="68.168999"
+             x="-152.74135"
+             y="-265.25821"
+             id="rect7484"
+             style="fill:#ffffff" />
+          <rect
+             width="54.004002"
+             height="103.582"
+             x="-80.145348"
+             y="-300.6712"
+             id="rect7486"
+             style="fill:#ececec" />
+          <rect
+             width="52.233002"
+             height="156.701"
+             x="-3.1223421"
+             y="-353.78918"
+             id="rect7488"
+             style="fill:#ffffff" />
+          <rect
+             width="52.233002"
+             height="178.56499"
+             x="73.01564"
+             y="-375.6532"
+             id="rect7490"
+             style="fill:#ffffff" />
+          <rect
+             width="48.691002"
+             height="205.83104"
+             x="148.26665"
+             y="-402.91922"
+             id="rect7492"
+             style="fill:#f9f9f9" />
+          <rect
+             width="53.118"
+             height="225.19408"
+             x="220.86366"
+             y="-422.28326"
+             id="rect7494"
+             style="fill:#ffffff" />
+          <polyline
+             transform="translate(-195.37935,-484.0742)"
+             style="fill:#f2f2f2"
+             points="296.724,373.747 215.275,373.747 215.275,392.338 296.724,392.338 296.724,373.747   "
+             id="polyline7496" />
+          <circle
+             cx="256.423"
+             cy="338.53299"
+             r="17.882"
+             transform="translate(-195.37935,-484.0742)"
+             id="circle7498"
+             style="fill:#333333" />
+        </g>
+        <g
+           transform="matrix(4.1240018,0,0,4.1240018,49.799416,48.445176)"
+           id="g8252"
+           style="fill:#ffffff;stroke:none">
+          <path
+             d="M 96,22.601 84.278,12.379 72.556,2.157 60.834,12.379 49.112,22.601 H 61.94 C 57.62,49.132 33.107,69.771 5.211,65.382 3.984,65.19 3.487,66.842 4.693,67.261 39.409,79.343 79.404,59.491 85.189,22.601 H 96 z"
+             id="path8234"
+             style="fill:#ffffff;stroke:none" />
+          <path
+             d="m 70,56.879 c -3.604,3.332 -7.635,6.235 -12,8.663 V 98.5 H 70 V 56.879 z"
+             id="path8236"
+             style="fill:#ffffff;stroke:none" />
+          <path
+             d="M 40,98.5 H 52 V 68.481 c -3.813,1.626 -7.827,2.907 -12,3.802 V 98.5 z"
+             id="path8238"
+             style="fill:#ffffff;stroke:none" />
+          <path
+             d="M 76,98.5 H 88 V 25.601 H 87.697 C 85.814,34.905 81.727,43.326 76,50.439 V 98.5 z"
+             id="path8240"
+             style="fill:#ffffff;stroke:none" />
+          <path
+             d="M 16,73.083 C 11.925,72.488 7.912,71.531 4,70.189 V 98.5 H 16 V 73.083 z"
+             id="path8242"
+             style="fill:#ffffff;stroke:none" />
+          <path
+             d="M 22,98.5 H 34 V 73.292 c -2.729,0.331 -5.51,0.505 -8.335,0.505 -1.226,0 -2.447,-0.046 -3.665,-0.112 V 98.5 z"
+             id="path8244"
+             style="fill:#ffffff;stroke:none" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

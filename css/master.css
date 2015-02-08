@@ -249,11 +249,8 @@ nav {
   background-color: #116db9;
   z-index: 1;
   position: fixed;
-  bottom: 0;
   font-size: 0.691em;
   margin: 0 auto;
-  padding: 1em;
-  width: 100%;
 }
 nav .current {
   border-bottom: 3px solid #f2f1ef;
@@ -270,11 +267,14 @@ nav ul a {
 }
 nav ul a li {
   display: inline-block;
-  padding: 0.618em 0.5em;
+  padding: 0.771em 0.5em;
   text-transform: uppercase;
   font-weight: 400;
   font-size: 0.9rem;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+nav ul a li:hover {
+  background-color: #0e5d9d;
 }
 @media only screen and (max-width: 36.5625em) {
   nav {
@@ -404,6 +404,8 @@ nav ul a li {
   padding-left: 0;
   padding-right: 0;
   margin-bottom: 1.618em;
+  padding-top: 5em;
+  margin-top: -5em;
 }
 #intro:before,
 #intro:after {
@@ -478,6 +480,10 @@ nav ul a li {
   height: 194.6px;
   text-align: center;
   margin: 0 auto;
+}
+#highlights {
+  padding-top: 5em;
+  margin-top: -5em;
 }
 .expects {
   *zoom: 1;
@@ -648,6 +654,8 @@ nav ul a li {
   margin-left: auto;
   padding-left: 0;
   padding-right: 0;
+  padding-top: 5em;
+  margin-top: -5em;
 }
 #work:before,
 #work:after {

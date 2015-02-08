@@ -61,7 +61,7 @@
     }
     $('nav').scrollspy({
       min: $('nav').height(),
-      max: $(document).height(),
+      max: 9999999,
       onEnter: function(elem, pos) {
         console.log(pos);
         return $('nav').removeClass('transparent');
@@ -72,7 +72,7 @@
     });
     $('nav a[href="#"] li').scrollspy({
       min: $('.hero').offset().top,
-      max: $('#intro').offset().top - $('nav').height(),
+      max: $('#intro').offset().top - $('nav').height() * 4,
       onEnter: function(elem, pos) {
         return $(elem).addClass('current');
       },
@@ -81,7 +81,7 @@
       }
     });
     $('nav a[href="#intro"] li').scrollspy({
-      min: $('#intro').offset().top - $('nav').height(),
+      min: $('#intro').offset().top - $('nav').height() * 4,
       max: $('#highlights').offset().top - $('nav').height() * 2,
       onEnter: function(elem, pos) {
         return $(elem).addClass('current');

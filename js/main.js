@@ -56,7 +56,9 @@
     if (!isMobile) {
       setOpacity();
       $(window).scroll(function() {
-        return setOpacity();
+        if ($(window).scrollTop() <= $(document).height() / 2) {
+          return setOpacity();
+        }
       });
     }
     $('nav').scrollspy({

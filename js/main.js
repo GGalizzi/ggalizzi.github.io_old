@@ -5,7 +5,7 @@
     }
   });
 
-  require(['jquery'], function($) {
+  require(['jquery', 'scrollspy.min'], function($, scrollspy) {
     var isMobile, setOpacity, target;
     console.log('jquery loaded');
     new WOW({
@@ -55,10 +55,70 @@
     };
     if (!isMobile) {
       setOpacity();
-      return $(window).scroll(function() {
+      $(window).scroll(function() {
         return setOpacity();
       });
     }
+    $('nav').scrollspy({
+      min: $('nav').height(),
+      max: $(document).height(),
+      onEnter: function(elem, pos) {
+        console.log(pos);
+        return $('nav').removeClass('transparent');
+      },
+      onLeave: function(elem, pos) {
+        return $('nav').addClass('transparent');
+      }
+    });
+    $('nav a[href="#"] li').scrollspy({
+      min: $('.hero').offset().top,
+      max: $('#intro').offset().top - $('nav').height(),
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
+    $('nav a[href="#intro"] li').scrollspy({
+      min: $('#intro').offset().top - $('nav').height(),
+      max: $('#highlights').offset().top - $('nav').height() * 2,
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
+    $('nav a[href="#highlights"] li').scrollspy({
+      min: $('#highlights').offset().top - $('nav').height() * 2,
+      max: $('#work').offset().top - $('nav').height() * 2,
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
+    $('nav a[href="#work"] li').scrollspy({
+      min: $('#work').offset().top - $('nav').height() * 2,
+      max: $('#contact').offset().top,
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
+    return $('nav a[href="#contact"] li').scrollspy({
+      min: $('#contact').offset().top,
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
   });
 
 }).call(this);

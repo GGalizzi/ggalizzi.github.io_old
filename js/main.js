@@ -39,7 +39,9 @@
     setOpacity = function() {
       var fadeUntil, fromTop, height, offset, opacity;
       fromTop = $(window).scrollTop();
-      target.css('margin-top', fromTop + 'px');
+      if (fromTop < $('.hero').outerHeight()) {
+        target.css('margin-top', fromTop + 'px');
+      }
       offset = target.offset().top;
       height = target.outerHeight() / 4;
       fadeUntil = $('.hero').outerHeight() / 2;

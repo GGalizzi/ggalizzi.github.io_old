@@ -589,6 +589,10 @@ nav ul a li:hover {
   .overview {
     font-size: 1.681em;
   }
+  .icon {
+    max-width: 194px;
+    max-height: 194px;
+  }
   .expects .expect {
     *zoom: 1;
     float: left;
@@ -692,6 +696,7 @@ nav ul a li:hover {
 }
 #third {
   background-color: #1d8eea;
+  display: none;
 }
 .example {
   transition: linear all 0.8s;
@@ -707,6 +712,7 @@ nav ul a li:hover {
 }
 .example img {
   width: 100%;
+  height: 100%;
 /*
   div
     position absolute
@@ -730,7 +736,7 @@ nav ul a li:hover {
 .explain {
   clear: both;
 }
-@media only screen and (min-width: 60em) {
+@media only screen and (min-width: 40.625em) {
   #work {
     *zoom: 1;
     width: auto;
@@ -755,6 +761,56 @@ nav ul a li:hover {
     float: left;
     clear: none;
     text-align: inherit;
+    width: 50%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .example:before,
+  .example:after {
+    content: '';
+    display: table;
+  }
+  .example:after {
+    clear: both;
+  }
+  .example:nth-child(2n) {
+    float: right;
+  }
+  .example:nth-child(2n + 1) {
+    clear: both;
+  }
+  .explain {
+    padding: 0.676em;
+  }
+}
+@media only screen and (min-width: 60em) {
+  #work {
+    *zoom: 1;
+    width: auto;
+    max-width: 100%;
+    float: none;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #work:before,
+  #work:after {
+    content: '';
+    display: table;
+  }
+  #work:after {
+    clear: both;
+  }
+  #third {
+    display: inline-block;
+  }
+  .example {
+    *zoom: 1;
+    float: left;
+    clear: none;
+    text-align: inherit;
     width: 33.3333333333333%;
     margin-left: 0%;
     margin-right: 0%;
@@ -773,15 +829,21 @@ nav ul a li:hover {
   .example:nth-child(3n + 1) {
     clear: both;
   }
+  .example:nth-child(2n) {
+    float: left;
+  }
+  .example:nth-child(2n + 1) {
+    clear: none;
+  }
 }
 .pad {
-  padding: 0 5%;
+  padding: 1.618em 5%;
+  text-align: center;
 }
 #contact {
   position: relative;
   background-color: #0e5794;
   color: #f2f1ef;
-  padding-bottom: 4.236em;
 }
 #contact p {
   font-weight: 800;
@@ -796,6 +858,7 @@ nav ul a li:hover {
   border-radius: 3px;
   margin: 0.676em;
   padding: 0.676em;
+  border: 2px solid #116db9;
 }
 #contact ul li:hover {
   background-color: #0e5794;
@@ -808,4 +871,36 @@ nav ul a li:hover {
   color: #f2f1ef;
   line-height: auto;
   margin: 0;
+}
+#footer {
+  background-color: #1275c7;
+  margin: 0;
+  text-align: center;
+}
+#footer p {
+  font-family: "Open Sans Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  text-align: center;
+  color: #f2f1ef;
+  display: inline-block;
+  margin: 0 0.771em;
+}
+@media only screen and (max-width: 18.4375em) {
+  .hero #welcome {
+    line-height: auto;
+    padding: 0;
+  }
+  .hero #welcome h1 {
+    font-size: 1.618em;
+  }
+  #contact .pad {
+    padding: 0;
+  }
+  #contact ul li {
+    margin: 0.5em 0;
+  }
+  #contact p {
+    font-size: 1em;
+    font-weight: 300;
+  }
 }

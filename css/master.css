@@ -354,6 +354,11 @@ nav ul a li {
   margin: 0;
 }
 .overlay {
+  position: relative;
+  background-color: #116db9;
+  height: 100vh;
+}
+.backgroundsize .overlay {
   position: absolute;
   bottom: 0;
   background-color: rgba(17,109,185,0.3);

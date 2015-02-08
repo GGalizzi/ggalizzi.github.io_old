@@ -699,7 +699,6 @@ nav ul a li:hover {
   display: none;
 }
 .example {
-  transition: linear all 0.8s;
   width: 100%;
   margin: 0 auto;
   padding: 1rem;

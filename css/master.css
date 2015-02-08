@@ -276,7 +276,7 @@ nav ul a li {
 nav ul a li:hover {
   background-color: #0e5d9d;
 }
-@media only screen and (max-width: 36.5625em) {
+@media only screen and (max-width: 37.5em) {
   nav {
     display: none;
   }
@@ -477,13 +477,15 @@ nav ul a li:hover {
 }
 .icon {
   display: block;
-  height: 194.6px;
+  max-height: 194.6px;
+  max-width: 194.6px;
   text-align: center;
   margin: 0 auto;
 }
 #highlights {
   padding-top: 5em;
   margin-top: -5em;
+  margin-bottom: 1.618em;
 }
 .expects {
   *zoom: 1;
@@ -512,6 +514,10 @@ nav ul a li:hover {
   text-align: center;
 }
 @media only screen and (min-width: 40.625em) {
+  .icon {
+    max-height: 150.425px;
+    max-width: 150.425px;
+  }
   .expects {
     clear: both;
     *zoom: 1;

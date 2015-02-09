@@ -316,7 +316,7 @@ nav ul a li:hover {
   min-height: 29.03em;
   height: 100vh;
   width: 100%;
-  background-image: url("/img/desk.jpg");
+  background-image: url("/img/desk_low.jpg");
   background-size: cover;
   background-position: 0% 0%;
   background-attachment: fixed;
@@ -352,6 +352,16 @@ nav ul a li:hover {
 }
 .hero h1 {
   margin: 0;
+}
+@media only screen and (min-width: 44.9375em) {
+  .hero {
+    background-image: url("/img/desk_medium.jpg");
+  }
+}
+@media only screen and (min-width: 62.5em) {
+  .hero {
+    background-image: url("/img/desk.jpg");
+  }
 }
 .overlay {
   position: relative;

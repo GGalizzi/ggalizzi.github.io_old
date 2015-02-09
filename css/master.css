@@ -475,11 +475,21 @@ nav ul a li:hover {
     width: 30%;
   }
 }
-@media only screen and (min-width: 62.5em) {
+@media only screen and (min-width: 18.75em) {
   .skills .category .skill {
     display: inline-block;
-    width: 20%;
+    width: 45%;
     margin: 0.258em;
+  }
+}
+@media only screen and (min-width: 38.75em) {
+  .skills .category .skill {
+    width: 35%;
+  }
+}
+@media only screen and (min-width: 56.25em) {
+  .skills .category .skill {
+    width: 20%;
   }
 }
 @media only screen and (min-width: 65em) {

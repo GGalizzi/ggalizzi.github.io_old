@@ -854,32 +854,61 @@ nav ul a li:hover {
   background-color: #0e5794;
   color: #f2f1ef;
 }
+#contact .title {
+  background-color: #0d528b;
+}
+#contact div {
+  padding: 0.418em;
+}
 #contact p {
   font-weight: 800;
+  line-height: 1em;
+  margin-bottom: 0.676em;
 }
 #contact ul {
   margin: 0 auto;
   padding: 0;
 }
 #contact ul li {
+  width: 80%;
   background-color: #116db9;
   display: inline-block;
   border-radius: 3px;
   margin: 0.676em;
-  padding: 0.676em;
   border: 2px solid #116db9;
 }
 #contact ul li:hover {
   background-color: #0e5794;
-  border: 2px solid #f2f1ef;
+}
+#contact ul li:hover div {
+  background-color: #116db9;
+}
+#contact ul li:hover .title {
+  background-color: #0f62a7;
 }
 #contact ul li:hover p {
   color: #f2f1ef;
 }
 #contact ul li p {
+  line-height: 1.094em;
   color: #f2f1ef;
   line-height: auto;
   margin: 0;
+}
+@media only screen and (min-width: 32.8125em) {
+  #contact ul li {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 62.5em) {
+  #contact ul li {
+    width: 35%;
+  }
+}
+@media only screen and (min-width: 84.375em) {
+  #contact ul li {
+    width: 20%;
+  }
 }
 #footer {
   background-color: #1275c7;
@@ -894,7 +923,7 @@ nav ul a li:hover {
   display: inline-block;
   margin: 0 0.771em;
 }
-@media only screen and (max-width: 18.4375em) {
+@media only screen and (max-width: 19.6875em) {
   .hero #welcome {
     line-height: auto;
     padding: 0;

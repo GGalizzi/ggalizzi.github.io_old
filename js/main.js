@@ -85,17 +85,7 @@
       }
     });
     $('nav a[href="#intro"] li').scrollspy({
-      min: $('#intro').offset().top - $('nav').height() * 4,
-      max: $('#highlights').offset().top - $('nav').height() * 2,
-      onEnter: function(elem, pos) {
-        return $(elem).addClass('current');
-      },
-      onLeave: function(elem, pos) {
-        return $(elem).removeClass('current');
-      }
-    });
-    $('nav a[href="#highlights"] li').scrollspy({
-      min: $('#highlights').offset().top - $('nav').height() * 2,
+      min: $('#intro').offset().top - $('nav').height() * 5,
       max: $('#work').offset().top - $('nav').height() * 2,
       onEnter: function(elem, pos) {
         return $(elem).addClass('current');
@@ -105,8 +95,18 @@
       }
     });
     $('nav a[href="#work"] li').scrollspy({
-      min: $('#work').offset().top - $('nav').height() * 2,
-      max: $('#contact').offset().top,
+      min: $('#work').offset().top - $('nav').height() * 4,
+      max: $('#highlights').offset().top - $('nav').height(),
+      onEnter: function(elem, pos) {
+        return $(elem).addClass('current');
+      },
+      onLeave: function(elem, pos) {
+        return $(elem).removeClass('current');
+      }
+    });
+    $('nav a[href="#highlights"] li').scrollspy({
+      min: $('#highlights').offset().top - $('nav').height() * 2,
+      max: $('#contact').offset().top - $('nav').height() * 2,
       onEnter: function(elem, pos) {
         return $(elem).addClass('current');
       },

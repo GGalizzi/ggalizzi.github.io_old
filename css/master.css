@@ -383,6 +383,7 @@ nav ul a li:hover {
 }
 .me strong {
   font-weight: 700;
+  letter-spacing: 1px;
 }
 #portrait {
   width: 194.16px;
@@ -406,7 +407,7 @@ nav ul a li:hover {
   position: relative;
   *zoom: 1;
   width: auto;
-  max-width: 90%;
+  max-width: 93%;
   float: none;
   display: block;
   margin-right: auto;
@@ -469,11 +470,21 @@ nav ul a li:hover {
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
+@media only screen and (min-width: 43.75em) {
+  .skills .category .skill {
+    width: 30%;
+  }
+}
 @media only screen and (min-width: 62.5em) {
   .skills .category .skill {
     display: inline-block;
-    width: 45%;
+    width: 20%;
     margin: 0.258em;
+  }
+}
+@media only screen and (min-width: 65em) {
+  .skills .category .skill {
+    width: 45%;
   }
 }
 .trans-image {
@@ -500,7 +511,7 @@ nav ul a li:hover {
 .expects {
   *zoom: 1;
   width: auto;
-  max-width: 90%;
+  max-width: 93%;
   float: none;
   display: block;
   margin-right: auto;
@@ -575,6 +586,7 @@ nav ul a li:hover {
     margin-right: 0%;
   }
   .expects div .describe {
+    margin-top: 0.85rem;
     *zoom: 1;
     float: left;
     clear: none;
@@ -595,7 +607,7 @@ nav ul a li:hover {
     margin-right: 0%;
   }
 }
-@media only screen and (min-width: 55em) {
+@media only screen and (min-width: 63.75em) {
   .overview {
     font-size: 1.681em;
   }
@@ -908,6 +920,11 @@ nav ul a li:hover {
 @media only screen and (min-width: 84.375em) {
   #contact ul li {
     width: 20%;
+  }
+}
+@media only screen and (min-width: 108.75em) {
+  #contact ul li {
+    width: 18%;
   }
 }
 #footer {

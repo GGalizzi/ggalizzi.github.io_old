@@ -412,26 +412,9 @@ nav ul a li:hover {
 }
 #intro {
   position: relative;
-  *zoom: 1;
-  width: auto;
-  max-width: 93%;
-  float: none;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 0;
-  padding-right: 0;
   margin-bottom: 1.618em;
   padding-top: 5em;
   margin-top: -5em;
-}
-#intro:before,
-#intro:after {
-  content: '';
-  display: table;
-}
-#intro:after {
-  clear: both;
 }
 #intro h1,
 #intro h2 {
@@ -442,6 +425,23 @@ nav ul a li:hover {
 .overview {
   text-align: left;
   font-size: 1.094em;
+  *zoom: 1;
+  width: auto;
+  max-width: 85%;
+  float: none;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+.overview:before,
+.overview:after {
+  content: '';
+  display: table;
+}
+.overview:after {
+  clear: both;
 }
 .skills {
   text-align: center;
@@ -501,7 +501,7 @@ nav ul a li:hover {
 }
 @media only screen and (min-width: 65em) {
   .skills .category .skill {
-    width: 45%;
+    width: 40%;
   }
 }
 .trans-image {
@@ -528,7 +528,7 @@ nav ul a li:hover {
 .expects {
   *zoom: 1;
   width: auto;
-  max-width: 93%;
+  max-width: 85%;
   float: none;
   display: block;
   margin-right: auto;
@@ -604,6 +604,7 @@ nav ul a li:hover {
   }
   .expects div .describe {
     margin-top: 0.85rem;
+    padding-left: 5%;
     *zoom: 1;
     float: left;
     clear: none;
@@ -626,11 +627,54 @@ nav ul a li:hover {
 }
 @media only screen and (min-width: 63.75em) {
   .overview {
+    *zoom: 1;
+    width: auto;
+    max-width: 80%;
+    float: none;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .overview:before,
+  .overview:after {
+    content: '';
+    display: table;
+  }
+  .overview:after {
+    clear: both;
+  }
+  .overview {
     font-size: 1.681em;
   }
+}
+@media only screen and (min-width: 75em) {
   .icon {
     max-width: 194px;
     max-height: 194px;
+  }
+  .describe {
+    padding: 0 5%;
+  }
+  .expects {
+    *zoom: 1;
+    width: auto;
+    max-width: 100%;
+    float: none;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .expects:before,
+  .expects:after {
+    content: '';
+    display: table;
+  }
+  .expects:after {
+    clear: both;
   }
   .expects .expect {
     *zoom: 1;
@@ -690,6 +734,31 @@ nav ul a li:hover {
   }
   .skills .category:last-child {
     margin-right: 0%;
+  }
+}
+@media only screen and (min-width: 85.625em) {
+  .describe {
+    padding: 0 10%;
+  }
+  .overview {
+    text-align: center;
+    *zoom: 1;
+    width: auto;
+    max-width: 70%;
+    float: none;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .overview:before,
+  .overview:after {
+    content: '';
+    display: table;
+  }
+  .overview:after {
+    clear: both;
   }
 }
 #work {

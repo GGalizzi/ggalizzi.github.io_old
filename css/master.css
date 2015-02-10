@@ -523,7 +523,6 @@ nav ul a li:hover {
 #highlights {
   padding-top: 5em;
   margin-top: -5em;
-  margin-bottom: 1.618em;
 }
 .expects {
   *zoom: 1;
@@ -557,8 +556,25 @@ nav ul a li:hover {
     max-width: 150.425px;
   }
   .expects {
+    *zoom: 1;
+    width: auto;
+    max-width: 95%;
+    float: none;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
     clear: both;
     *zoom: 1;
+  }
+  .expects:before,
+  .expects:after {
+    content: '';
+    display: table;
+  }
+  .expects:after {
+    clear: both;
   }
   .expects h2 {
     font-size: 2rem;
@@ -655,7 +671,7 @@ nav ul a li:hover {
     max-height: 194px;
   }
   .describe {
-    padding: 0 5%;
+    padding: 0 10%;
   }
   .expects {
     *zoom: 1;
@@ -667,6 +683,8 @@ nav ul a li:hover {
     margin-left: auto;
     padding-left: 0;
     padding-right: 0;
+    display: table;
+    height: 100%;
   }
   .expects:before,
   .expects:after {
@@ -681,9 +699,11 @@ nav ul a li:hover {
     float: left;
     clear: none;
     text-align: inherit;
-    width: 31.3333333333333%;
+    width: 33.3333333333333%;
     margin-left: 0%;
-    margin-right: 3%;
+    margin-right: 0%;
+    display: table-cell;
+    height: 100%;
   }
   .expects .expect:before,
   .expects .expect:after {
@@ -692,9 +712,6 @@ nav ul a li:hover {
   }
   .expects .expect:after {
     clear: both;
-  }
-  .expects .expect:last-child {
-    margin-right: 0%;
   }
   .expects .expect .show,
   .expects .expect .describe {
@@ -737,9 +754,6 @@ nav ul a li:hover {
   }
 }
 @media only screen and (min-width: 85.625em) {
-  .describe {
-    padding: 0 10%;
-  }
   .overview {
     text-align: center;
     *zoom: 1;

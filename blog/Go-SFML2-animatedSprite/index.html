@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>GGalizzi Blog | Creando sprites animados en SFML2 con Go</title>
+
+    
+
+    <meta name="description" content="Cuento mi progreso creando un paquete de Go para crear fácilmente sprites animados usando SFML2.
+">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="GGalizzi Blog" href="http://ggalizzi.com/feed.xml">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Basehold.it 
+    <link rel="stylesheet" href="http://basehold.it/29">
+    <!------>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49210886-1', 'ggalizzi.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </head>
+  <body>
+
+    <div class="header">
+      <h1 class="logo"><a href="/">G</a></h1>
+      <nav>
+        <ul class="nav">
+          <li><a class="extra" href="/">Home</a></li><li>
+          <a class="extra" href="/about/">Sobre Mi</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="site">
+
+      <ul class="categories-in-post">
+  
+  <li>golang
+    
+    <span>|</span>
+    
+  </li>
+  
+  <li>sfml2
+    
+    <span>|</span>
+    
+  </li>
+  
+  <li>gamedev
+    
+  </li>
+  
+</ul>
+<h2 class="title">Creando sprites animados en SFML2 con Go</h2>
+<p class="meta">25/06/2014</p>
+
+<div class="post">
+<p>Cuento mi progreso creando un paquete de Go para crear fácilmente sprites animados usando SFML2.</p>
+
+<p>El paquete de Go que uso para SFML es <a href="https://bitbucket.org/krepa098/gosfml2">el de krepa098 en bitbucket</a>, ya que parece ser el mas activo.</p>
+
+<p>El paquete hasta el momento crea tres estructuras nuevas: <code>frame</code>, <code>animation</code> y <code>animatedSprite</code>.</p>
+
+<h3>Estructura frame</h3>
+
+<p>Esta estructura es sencilla, simplemente tiene dos campos.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">frame</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">canIdle</span> <span class="kt">bool</span>
+    <span class="nx">rect</span>    <span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+<li><p>canIdle: Si el frame es utilizado en el estado idle.</p></li>
+<li><p>rect: El rectangulo dentro del spritesheet que utilizaremos, donde se encuentra el sprite que corresponde. Utilizamos <a href="http://www.sfml-dev.org/documentation/2.0/classsf_1_1Rect.php">IntRect de SFML para esto.</a></p></li>
+</ul>
+
+<p>Cree esta estructura para que cada frame sepa si puede ser utilizado como parte de una animación idle (osea, cuando el personaje esta &quot;quieto&quot;) que se suele usar animaciones de respiración o algo interesante para que quede mas real o simplemente mejor.</p>
+
+<h4>Métodos de frame</h4>
+
+<p>Frame tiene un solo método, que es el que usamos para crear un frame.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">MakeFrame</span><span class="p">(</span><span class="nx">rect</span> <span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span><span class="p">,</span> <span class="nx">canIdle</span> <span class="kt">bool</span><span class="p">)</span> <span class="nx">frame</span> <span class="p">{</span>
+
+    <span class="k">return</span> <span class="nx">frame</span><span class="p">{</span><span class="nx">canIdle</span><span class="p">,</span> <span class="nx">rect</span><span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3>Estructura animation</h3>
+
+<p>Con esta estructura definimos lo siguiente:</p>
+
+<ul>
+<li><p>sheet: Es la textura (imagen) que corresponde a la planilla de sprites a utilizar para este objeto/personaje.</p></li>
+<li><p>frames: un frameSet es un nuevo tipo que defini, que es un <code>map[string][]frame</code>, y en el se pueden ingresar varios sets de animaciones, por ejemplo, un grupo de frames para cuando el personaje camina a la izquierda, otro cuando corre a la izquierda, otro para movimientos hacia la derecha, etc.</p></li>
+<li><p>lastSetPlayed: Acá simplemente guardamos cual fue el ultimo set que se reprodujo, para poder usar la animación idle correspondiente.</p></li>
+<li><p>fps: Y con esto la animación sabe a que velocidad debe ser actualizada, osea, cada cuantos segundos se cambiara al frame que sigue en la animación.</p></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">animation</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sheet</span> <span class="o">*</span><span class="nx">sf</span><span class="p">.</span><span class="nx">Texture</span>
+
+    <span class="nx">frames</span>        <span class="nx">frameSet</span>
+    <span class="nx">lastSetPlayed</span> <span class="kt">string</span>
+
+    <span class="nx">fps</span> <span class="kt">uint</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Entonces, con esta estructura podemos definir como un sheet de sprites funciona, dándole nombres a cada animación dentro del mismo.</p>
+
+<h4>Métodos de animation</h4>
+
+<p>animation tiene su constructor y un método para asignarle frameSets.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">NewAnimation</span><span class="p">(</span><span class="nx">texture</span> <span class="o">*</span><span class="nx">sf</span><span class="p">.</span><span class="nx">Texture</span><span class="p">,</span> <span class="nx">fps</span> <span class="kt">uint</span><span class="p">)</span> <span class="o">*</span><span class="nx">animation</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">animation</span><span class="p">)</span>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">sheet</span> <span class="p">=</span> <span class="nx">texture</span>
+
+    <span class="nx">a</span><span class="p">.</span><span class="nx">fps</span> <span class="p">=</span> <span class="nx">fps</span>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">frames</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="nx">frame</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">a</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">animation</span><span class="p">)</span> <span class="nx">CreateFrameSet</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">frames</span> <span class="o">...</span><span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">frames</span> <span class="p">{</span>
+        <span class="nx">a</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">key</span><span class="p">],</span> <span class="nx">f</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3>Estructura animatedSprite</h3>
+
+<p>Esta es la principal estructura, obviamente va a incluir un puntero a un <code>animation</code>, y además, a través de <a href="http://golang.org/doc/effective_go.html#embedding">embedding</a>, va a utilizar las mismas funciones que un sf.Sprite.</p>
+
+<p>También va a saber si la animación se debería reproducir en su estado idle, cual es el frame actual, el ultimo frameSet reproducido, y en que momento se realizo el ultimo update de frame.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">animatedSprite</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">anim</span> <span class="o">*</span><span class="nx">animation</span>
+
+    <span class="nx">IsIdle</span>       <span class="kt">bool</span>
+    <span class="nx">currentFrame</span> <span class="kt">uint</span>
+
+    <span class="nx">lastFrameSetPlayed</span> <span class="kt">string</span>
+    <span class="nx">lastUpdate</span>         <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+
+    <span class="o">*</span><span class="nx">sf</span><span class="p">.</span><span class="nx">Sprite</span>
+<span class="p">}</span></code></pre></div>
+
+<p>lastFrameSetPlayed, como se ve, simplemente guarda la <code>key</code> del mapa utilizado.</p>
+
+<h4>Métodos de animatedSprite</h4>
+
+<p>Además del constructor, tenemos los siguientes métodos.</p>
+
+<p><code>Move</code>, simplemente ejecuta el método base <code>sf.Sprite.Move</code> y una vez que el sprite se movió, lo ponemos en estado idle.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">Move</span><span class="p">(</span><span class="nx">vector</span> <span class="nx">sf</span><span class="p">.</span><span class="nx">Vector2f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">as</span><span class="p">.</span><span class="nx">Sprite</span><span class="p">.</span><span class="nx">Move</span><span class="p">(</span><span class="nx">vector</span><span class="p">)</span>
+    <span class="nx">as</span><span class="p">.</span><span class="nx">IsIdle</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>PlaySet</code> es el que vamos a utilizar cuando nuestro personaje realize una acción que requiere de una animación.</p>
+
+<p>Este se encarga también de indicar que el sprite no esta en estado <code>isIdle</code>, osea, cuando nuestro personaje haga una acción, llamaremos a <code>PlaySet</code> para que empiece la animación, después el personaje se mueve, y cuando deje de moverse, estará en <code>isIdle</code>.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">PlaySet</span><span class="p">(</span><span class="nx">set</span> <span class="p">[]</span><span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">as</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">set</span><span class="p">)</span>
+  <span class="nx">as</span><span class="p">.</span><span class="nx">IsIdle</span> <span class="p">=</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>update</code> es el método principal, donde va a actualizar al siguiente frame (o volver al primero).</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">update</span><span class="p">(</span><span class="nx">set</span> <span class="p">[]</span><span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Verifica que no nos pasemos de la maxima cantidad de frames que tiene un set.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">set</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="nx">as</span><span class="p">.</span><span class="nx">currentFrame</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">currentRect</span> <span class="o">:=</span> <span class="nx">set</span><span class="p">[</span><span class="nx">as</span><span class="p">.</span><span class="nx">currentFrame</span><span class="p">]</span>
+        <span class="nx">as</span><span class="p">.</span><span class="nx">SetTextureRect</span><span class="p">(</span><span class="nx">currentRect</span><span class="p">)</span>
+        <span class="c1">//Verificamos que sea tiempo de actualizar el frame.</span>
+        <span class="k">if</span> <span class="nx">as</span><span class="p">.</span><span class="nx">isTimeToUpdate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">as</span><span class="p">.</span><span class="nx">currentFrame</span><span class="o">++</span>
+            <span class="nx">as</span><span class="p">.</span><span class="nx">lastUpdate</span> <span class="p">=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">as</span><span class="p">.</span><span class="nx">currentFrame</span> <span class="p">=</span> <span class="mi">0</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>Stop</code> es el que va a utilizar los frames que se han indicado como <code>canIdle</code> y del set que se reprodujo ultimo.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">Stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">as</span><span class="p">.</span><span class="nx">isTimeToUpdate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">sli</span> <span class="p">[]</span><span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span>
+        <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">as</span><span class="p">.</span><span class="nx">anim</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">as</span><span class="p">.</span><span class="nx">anim</span><span class="p">.</span><span class="nx">lastSetPlayed</span><span class="p">]</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">f</span><span class="p">.</span><span class="nx">canIdle</span> <span class="p">{</span>
+                <span class="nx">sli</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">sli</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">rect</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">as</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">sli</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>isTimeToUpdate</code> usa la función <code>time.Since</code> de Go, para comparar el tiempo que paso desde la ultima actualización de frames, y verificamos que sea mayor a los FPS deseados.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">isTimeToUpdate</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Since</span><span class="p">(</span><span class="nx">as</span><span class="p">.</span><span class="nx">lastUpdate</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">/</span><span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">(</span><span class="nx">as</span><span class="p">.</span><span class="nx">anim</span><span class="p">.</span><span class="nx">fps</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+
+<p><code>AnimationSet</code> se va a utilizar junto a <code>PlaySet</code> para enviar las <code>sf.IntRect</code> que contienen los <code>frame</code>s indicados por <code>key</code>.</p>
+
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">as</span> <span class="o">*</span><span class="nx">animatedSprite</span><span class="p">)</span> <span class="nx">AnimationSet</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span> <span class="p">{</span>
+    <span class="nx">as</span><span class="p">.</span><span class="nx">anim</span><span class="p">.</span><span class="nx">lastSetPlayed</span> <span class="p">=</span> <span class="nx">key</span>
+    <span class="kd">var</span> <span class="nx">rectSet</span> <span class="p">[]</span><span class="nx">sf</span><span class="p">.</span><span class="nx">IntRect</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">as</span><span class="p">.</span><span class="nx">anim</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">{</span>
+        <span class="nx">rectSet</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">rectSet</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">rect</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">rectSet</span>
+<span class="p">}</span></code></pre></div>
+
+<h3>Y por ahora eso es todo.</h3>
+
+<p>Seguramente habrá muchas cosas de corregir, agregar y modificar a lo largo que siga trabajando en este paquete, y que me ire dando cuenta mientras lo utilice para alguno de mis proyectos.</p>
+
+<p>En el siguiente articulo voy a mostrar un pequeño demo de esto.</p>
+
+<p>Si queres comentar sobre esto, o cualquier cosa, hablame <a href="http://twitter.com/GuilleGalizzi">por twitter</a>.</p>
+
+</div>
+
+
+      <div class="footer">
+        <div class="contact">
+          <p>
+            Guillermo Galizzi<br />
+            Diseñador y desarollador web<br />
+            <a href="/rss/">RSS</a><br />
+          </p>
+        </div>
+        <div class="contact">
+          <p>
+            <a href="https://github.com/GGalizzi">github.com/GGalizzi</a><br />
+            <a href="https://twitter.com/GuilleGalizzi">twitter.com/GuilleGalizzi</a><br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

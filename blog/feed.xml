@@ -3,8 +3,8 @@
   <channel>
     <title>GGalizzi Blog</title>
     <description>Guillermo escribe sobre diseño, desarollo y programación.</description>		
-    <link>http://ggalizzi.com</link>
-    <atom:link href="http://ggalizzi.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://ggalizzi.com/blog</link>
+    <atom:link href="http://ggalizzi.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Creando sprites animados en SFML2 con Go</title>
@@ -176,8 +176,8 @@
 &lt;p&gt;Si queres comentar sobre esto, o cualquier cosa, hablame &lt;a href=&quot;http://twitter.com/GuilleGalizzi&quot;&gt;por twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
       <pubDate>Wed, 25 Jun 2014 13:00:00 -0300</pubDate>
-      <link>http://ggalizzi.com/Go-SFML2-animatedSprite</link>
-      <guid isPermaLink="true">http://ggalizzi.com/Go-SFML2-animatedSprite</guid>
+      <link>http://ggalizzi.com/blog/Go-SFML2-animatedSprite</link>
+      <guid isPermaLink="true">http://ggalizzi.com/blog/Go-SFML2-animatedSprite</guid>
     </item>
     
     <item>
@@ -257,8 +257,8 @@
 &lt;p&gt;Finalmente, si te interesa, podes ver un aplicación que cree en Node-Webkit junto a Angular.js, &lt;a href=&quot;https://github.com/GGalizzi/starlogger&quot;&gt;Starlogger&lt;/a&gt;, hecha para el juego &lt;a href=&quot;http://playstarbound.com&quot;&gt;Starbound.&lt;/a&gt;&lt;/p&gt;
 </description>
       <pubDate>Fri, 21 Mar 2014 19:00:00 -0300</pubDate>
-      <link>http://ggalizzi.com/Node-Webkit</link>
-      <guid isPermaLink="true">http://ggalizzi.com/Node-Webkit</guid>
+      <link>http://ggalizzi.com/blog/Node-Webkit</link>
+      <guid isPermaLink="true">http://ggalizzi.com/blog/Node-Webkit</guid>
     </item>
     
     <item>
@@ -349,8 +349,8 @@ indicar un ID.&lt;/p&gt;
 &lt;p&gt;El operador &lt;code&gt;$&lt;/code&gt; se usa luego de usar el operador de multiplicación, que convierte su valor al número que corresponde del elemento.&lt;/p&gt;
 </description>
       <pubDate>Wed, 19 Mar 2014 13:00:00 -0300</pubDate>
-      <link>http://ggalizzi.com/Emmet.vim</link>
-      <guid isPermaLink="true">http://ggalizzi.com/Emmet.vim</guid>
+      <link>http://ggalizzi.com/blog/Emmet.vim</link>
+      <guid isPermaLink="true">http://ggalizzi.com/blog/Emmet.vim</guid>
     </item>
     
     <item>
@@ -425,8 +425,8 @@ Por ejemplo, miremos esta función que camina el DOM, y aplica una funcion a cad
 &lt;p&gt;(Aunque aclaro que la librería jQuery nos otorga un método como este, y muchas otras cosas para caminar el DOM de manera mas eficiente, rápida y sencilla.)&lt;/p&gt;
 </description>
       <pubDate>Sun, 07 Apr 2013 14:00:00 -0300</pubDate>
-      <link>http://ggalizzi.com/document-object-model</link>
-      <guid isPermaLink="true">http://ggalizzi.com/document-object-model</guid>
+      <link>http://ggalizzi.com/blog/document-object-model</link>
+      <guid isPermaLink="true">http://ggalizzi.com/blog/document-object-model</guid>
     </item>
     
   </channel>

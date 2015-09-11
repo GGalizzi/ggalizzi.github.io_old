@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://ggalizzi.com/</loc>
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
+    <loc>http://ggalizzi.com/blog/</loc>
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://ggalizzi.com/Go-SFML2-animatedSprite</loc>
+    <loc>http://ggalizzi.com/blog/Go-SFML2-animatedSprite</loc>
     
     <lastmod>2014-06-25T13:00:00-03:00</lastmod>
     
@@ -24,7 +24,7 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/Node-Webkit</loc>
+    <loc>http://ggalizzi.com/blog/Node-Webkit</loc>
     
     <lastmod>2014-03-21T19:00:00-03:00</lastmod>
     
@@ -39,7 +39,7 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/Emmet.vim</loc>
+    <loc>http://ggalizzi.com/blog/Emmet.vim</loc>
     
     <lastmod>2014-03-19T13:00:00-03:00</lastmod>
     
@@ -54,7 +54,7 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/document-object-model</loc>
+    <loc>http://ggalizzi.com/blog/document-object-model</loc>
     
     <lastmod>2013-04-07T14:00:00-03:00</lastmod>
     
@@ -71,24 +71,9 @@
 
   
   <url>
-    <loc>http://ggalizzi.com/404.html</loc>
+    <loc>http://ggalizzi.com/blog/404.html</loc>
     
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
-    
-
-    
-    <changefreq>monthly</changefreq>
-    
-
-    
-    <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://ggalizzi.com/feed.xml</loc>
-    
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
     
 
     
@@ -101,24 +86,9 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/about/index.html</loc>
+    <loc>http://ggalizzi.com/blog/feed.xml</loc>
     
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
-    
-
-    
-    <changefreq>monthly</changefreq>
-    
-
-    
-    <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>http://ggalizzi.com/index.html</loc>
-    
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
     
 
     
@@ -131,9 +101,9 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/rss/index.html</loc>
+    <loc>http://ggalizzi.com/blog/about/index.html</loc>
     
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
     
 
     
@@ -146,9 +116,39 @@
   </url>
   
   <url>
-    <loc>http://ggalizzi.com/sitemap.xml</loc>
+    <loc>http://ggalizzi.com/blog/index.html</loc>
     
-    <lastmod>2015-09-11T09:21:41-03:00</lastmod>
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
+    
+
+    
+    <changefreq>monthly</changefreq>
+    
+
+    
+    <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://ggalizzi.com/blog/rss/index.html</loc>
+    
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
+    
+
+    
+    <changefreq>monthly</changefreq>
+    
+
+    
+    <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>http://ggalizzi.com/blog/sitemap.xml</loc>
+    
+    <lastmod>2015-09-11T10:13:42-03:00</lastmod>
     
 
     

@@ -28,8 +28,8 @@
         }
       }
     });
-    if (Modernizr.csstransforms) {
-      $("#welcome").addClass("centered");
+    if (!Modernizr.csstransforms) {
+      $("#welcome").addClass("margin-top");
     }
     isMobile = false;
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {

@@ -283,7 +283,7 @@ nav ul a li {
 nav ul a li:hover {
   background-color: #0e5d9d;
 }
-@media only screen and (max-width: 37.5em) {
+@media only screen and (max-width: 39.625em) {
   nav {
     display: none;
   }
@@ -815,10 +815,10 @@ nav ul a li:hover {
 }
 #second {
   background-color: #147ed5;
+  display: none;
 }
 #third {
   background-color: #1d8eea;
-  display: none;
 }
 .example {
   width: 100%;
@@ -924,7 +924,7 @@ nav ul a li:hover {
   #work:after {
     clear: both;
   }
-  #third {
+  #second {
     display: inline-block;
   }
   .example {

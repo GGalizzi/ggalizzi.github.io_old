@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>GGalizzi Blog</title>
+  <subtitle>Guillermo escribe sobre diseño, desarollo y programación.</subtitle>
+  <id>http://blog.url.com/blog</id>
+  <link href="http://blog.url.com/blog"/>
+  <link href="http://blog.url.com/feed.xml" rel="self"/>
+  <updated>2015-09-16T21:00:00-03:00</updated>
+  <author>
+    <name>Guillermo Galizzi</name>
+  </author>
+  <entry>
+    <title>Entity Component System</title>
+    <link rel="alternate" href="http://blog.url.com/blog/ecs/"/>
+    <id>http://blog.url.com/blog/ecs/</id>
+    <published>2015-09-16T21:00:00-03:00</published>
+    <updated>2016-02-07T11:11:42-03:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;The roguelike I'm currently working on uses an &lt;a href="http://entity-systems.wikidot.com/"&gt;Entity Component System&lt;/a&gt; (ECS for short) which are becoming a lot more popular as of late, and for good reason.&lt;/p&gt;
+
+&lt;p&gt;Using an ECS makes much more sense for game design, not only will your code be better modularized and organized, but it also opens up a lot of possibilities, and together with some imagination allow you to do a lot of interesting stuff.&lt;/p&gt;
+
+&lt;p&gt;I'm gonna be talking about what I like about ECS, and how I use it / implement it.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Also, I also use an Event / Observer pattern with my ECSs, which I've yet to see in other ECSs. I think this allow for even better decoupling (than ECS already offers), and I'll be talking about that also.&lt;/p&gt;
+
+&lt;p&gt;Lets start by defining the three principal parts of an ECS, and then the fourth one I added, Events.&lt;/p&gt;
+
+&lt;h3 id="entity"&gt;Entity&lt;/h3&gt;
+
+&lt;p&gt;To the program an Entity will just be an ID, you could implement it as some number, or an UUID, think it of as a primary key in a database, a fast way to access some data related to this id.&lt;/p&gt;
+
+&lt;p&gt;An Entity will represent just about anything in the game, the player, an orc, a potion, a sword, a tree, maybe even things that can't be seen by the player, like a trigger zone that when you enter it, something happens.&lt;/p&gt;
+
+&lt;p&gt;They &lt;em&gt;become&lt;/em&gt; these things as you stuff them with components, entities are basically bags with components in them.&lt;/p&gt;
+
+&lt;h3 id="component"&gt;Component&lt;/h3&gt;
+
+&lt;p&gt;Entities &lt;em&gt;become&lt;/em&gt; something by adding components to them, say an orc maybe has the components &lt;code&gt;position&lt;/code&gt;, &lt;code&gt;sprite&lt;/code&gt;, &lt;code&gt;health&lt;/code&gt;, &lt;code&gt;stats&lt;/code&gt;, &lt;code&gt;berserk_ai&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each component has data in them, they are just plain old data structures, they have no logic directly associated with them, you don't implement methods on them (well, getter, setters and helper stuff of the sort is allowed, nothing much). So the &lt;code&gt;position&lt;/code&gt; component probably just haves &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt;, &lt;code&gt;health&lt;/code&gt; has &lt;code&gt;current&lt;/code&gt; and &lt;code&gt;max&lt;/code&gt;, you get the idea.&lt;/p&gt;
+
+&lt;p&gt;Some components probably don't even have data in them, they are just markers of some property an entity can have, say &lt;code&gt;Solid&lt;/code&gt;, which marks something that blocks your way.&lt;/p&gt;
+
+&lt;p&gt;And you can add or remove components to entities when you please.&lt;/p&gt;
+
+&lt;h3 id="systems"&gt;Systems&lt;/h3&gt;
+
+&lt;p&gt;Systems (or as I preffer to call them, &lt;em&gt;Behaviors&lt;/em&gt;) are where the logic goes, they define how a certain entity &lt;em&gt;behaves&lt;/em&gt; depending on what components they have.&lt;/p&gt;
+
+&lt;p&gt;An entity with &lt;code&gt;position&lt;/code&gt; and &lt;code&gt;sprite&lt;/code&gt; probably can't do much, except for being drawn, maybe its just some ground tile, but then you add some &lt;code&gt;trap&lt;/code&gt; component and suddenly it becomes a dangerous piece of tile.&lt;/p&gt;
+
+&lt;p&gt;Systems perform the logic if an entity has the required set of components, maybe there's even a list of forbidden components. Say the movement system needs a &lt;code&gt;position&lt;/code&gt;, &lt;code&gt;sprite&lt;/code&gt; and &lt;code&gt;movement&lt;/code&gt; component, but if it has the &lt;code&gt;freezed&lt;/code&gt; component then it just skips it.&lt;/p&gt;
+
+&lt;p&gt;Some ECSs (my latest one included) also implement &lt;strong&gt;families&lt;/strong&gt;, which is a quick way to categorize entities, and systems will grab entities that belong to some family.&lt;/p&gt;
+
+&lt;p&gt;Say a &lt;code&gt;mob&lt;/code&gt; family, something belongs to it if it has &lt;code&gt;stats&lt;/code&gt; and &lt;code&gt;health&lt;/code&gt;. And something belongs to the &lt;code&gt;tile&lt;/code&gt; family if it has &lt;code&gt;position&lt;/code&gt; and &lt;code&gt;sprite&lt;/code&gt; but &lt;strong&gt;not&lt;/strong&gt; the &lt;code&gt;stats&lt;/code&gt; component.&lt;/p&gt;
+
+&lt;h3 id="events"&gt;Events&lt;/h3&gt;
+
+&lt;p&gt;Systems push and read events, that's how they interact with each other, some &lt;code&gt;input&lt;/code&gt; system reads keyboard input and fires an event corresponding to what happens when you press that key, it doesn't care who's gonna need it.&lt;/p&gt;
+
+&lt;p&gt;And you have a &lt;code&gt;movement&lt;/code&gt; system which listens to those types of events, it doesn't &lt;em&gt;care&lt;/em&gt; where they come from, maybe the &lt;code&gt;movement&lt;/code&gt; event came from keyboard input, maybe it came from an ai, or from a potion or spell, why should it care? It just knows something has to move &lt;em&gt;there&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id="conclusion"&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;The decoupling an ECS allows is amazing, a lot of times when adding features you won't have to touch previous code, each system and each component becomes its own little world, caring nothing about the world around them.&lt;/p&gt;
+
+&lt;p&gt;You no longer have to worry about crazy inheritance chains in OOP, just add components to your entities, implement behaviors and there ya go.&lt;/p&gt;
+
+&lt;p&gt;Check out the &lt;a href="http://entity-systems.wikidot.com/"&gt;ecs wiki&lt;/a&gt; for more info.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Creando sprites animados en SFML2 con Go</title>
+    <link rel="alternate" href="http://blog.url.com/blog/Go-SFML2-animatedSprite/"/>
+    <id>http://blog.url.com/blog/Go-SFML2-animatedSprite/</id>
+    <published>2014-06-24T21:00:00-03:00</published>
+    <updated>2016-02-08T14:57:29-03:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Cuento mi progreso creando un paquete de Go para crear fácilmente sprites animados usando SFML2.&lt;/p&gt;
+
+&lt;p&gt;El paquete de Go que uso para SFML es &lt;a href="https://bitbucket.org/krepa098/gosfml2"&gt;el de krepa098 en bitbucket&lt;/a&gt;, ya que parece ser el mas activo.&lt;/p&gt;
+
+&lt;p&gt;El paquete hasta el momento crea tres estructuras nuevas: &lt;code&gt;frame&lt;/code&gt;, &lt;code&gt;animation&lt;/code&gt; y &lt;code&gt;animatedSprite&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id="estructura-frame"&gt;Estructura frame&lt;/h3&gt;
+
+&lt;p&gt;Esta estructura es sencilla, simplemente tiene dos campos.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;canIdle&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;rect&lt;/span&gt;&lt;span class="x"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;canIdle: Si el frame es utilizado en el estado idle.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;rect: El rectangulo dentro del spritesheet que utilizaremos, donde se encuentra el sprite que corresponde. Utilizamos &lt;a href="http://www.sfml-dev.org/documentation/2.0/classsf_1_1Rect.php"&gt;IntRect de SFML para esto.&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Cree esta estructura para que cada frame sepa si puede ser utilizado como parte de una animación idle (osea, cuando el personaje esta "quieto") que se suele usar animaciones de respiración o algo interesante para que quede mas real o simplemente mejor.&lt;/p&gt;
+
+&lt;h4 id="mtodos-de-frame"&gt;Métodos de frame&lt;/h4&gt;
+
+&lt;p&gt;Frame tiene un solo método, que es el que usamos para crear un frame.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;MakeFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rect&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;canIdle&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;canIdle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;rect&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="estructura-animation"&gt;Estructura animation&lt;/h3&gt;
+
+&lt;p&gt;Con esta estructura definimos lo siguiente:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;sheet: Es la textura (imagen) que corresponde a la planilla de sprites a utilizar para este objeto/personaje.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;frames: un frameSet es un nuevo tipo que defini, que es un &lt;code&gt;map[string][]frame&lt;/code&gt;, y en el se pueden ingresar varios sets de animaciones, por ejemplo, un grupo de frames para cuando el personaje camina a la izquierda, otro cuando corre a la izquierda, otro para movimientos hacia la derecha, etc.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;lastSetPlayed: Acá simplemente guardamos cual fue el ultimo set que se reprodujo, para poder usar la animación idle correspondiente.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;fps: Y con esto la animación sabe a que velocidad debe ser actualizada, osea, cada cuantos segundos se cambiara al frame que sigue en la animación.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;animation&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;sheet&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Texture&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="x"&gt;        &lt;/span&gt;&lt;span class="n"&gt;frameSet&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;lastSetPlayed&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="n"&gt;fps&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;uint&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Entonces, con esta estructura podemos definir como un sheet de sprites funciona, dándole nombres a cada animación dentro del mismo.&lt;/p&gt;
+
+&lt;h4 id="mtodos-de-animation"&gt;Métodos de animation&lt;/h4&gt;
+
+&lt;p&gt;Animation tiene su constructor y un método para asignarle frameSets.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;NewAnimation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;texture&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Texture&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;fps&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;uint&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animation&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;animation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sheet&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;texture&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fps&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;fps&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;make&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;][]&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;CreateFrameSet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;range&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="estructura-animatedsprite"&gt;Estructura animatedSprite&lt;/h3&gt;
+
+&lt;p&gt;Esta es la principal estructura, obviamente va a incluir un puntero a un &lt;code&gt;animation&lt;/code&gt;, y además, a través de &lt;a href="http://golang.org/doc/effective_go.html#embedding"&gt;embedding&lt;/a&gt;, va a utilizar las mismas funciones que un sf.Sprite.&lt;/p&gt;
+
+&lt;p&gt;También va a saber si la animación se debería reproducir en su estado idle, cual es el frame actual, el ultimo frameSet reproducido, y en que momento se realizo el ultimo update de frame.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animation&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="n"&gt;IsIdle&lt;/span&gt;&lt;span class="x"&gt;       &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;currentFrame&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;uint&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="n"&gt;lastFrameSetPlayed&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;lastUpdate&lt;/span&gt;&lt;span class="x"&gt;         &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="x"&gt;
+
+	&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Sprite&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;lastFrameSetPlayed, como se ve, simplemente guarda la &lt;code&gt;key&lt;/code&gt; del mapa utilizado.&lt;/p&gt;
+
+&lt;h4 id="mtodos-de-animatedsprite"&gt;Métodos de animatedSprite&lt;/h4&gt;
+
+&lt;p&gt;Además del constructor, tenemos los siguientes métodos.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Move&lt;/code&gt;, simplemente ejecuta el método base &lt;code&gt;sf.Sprite.Move&lt;/code&gt; y una vez que el sprite se movió, lo ponemos en estado idle.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;Move&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Vector2f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Sprite&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Move&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IsIdle&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;PlaySet&lt;/code&gt; es el que vamos a utilizar cuando nuestro personaje realize una acción que requiere de una animación.&lt;/p&gt;
+
+&lt;p&gt;Este se encarga también de indicar que el sprite no esta en estado &lt;code&gt;isIdle&lt;/code&gt;, osea, cuando nuestro personaje haga una acción, llamaremos a &lt;code&gt;PlaySet&lt;/code&gt; para que empiece la animación, después el personaje se mueve, y cuando deje de moverse, estará en &lt;code&gt;isIdle&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;PlaySet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+  &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+  &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IsIdle&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;update&lt;/code&gt; es el método principal, donde va a actualizar al siguiente frame (o volver al primero).&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="c"&gt;//Verifica que no nos pasemos de la maxima cantidad de frames que tiene un set.&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentFrame&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="n"&gt;currentRect&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentFrame&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetTextureRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentRect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="c"&gt;//Verificamos que sea tiempo de actualizar el frame.&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isTimeToUpdate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+			&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentFrame&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="x"&gt;
+			&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lastUpdate&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Now&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;currentFrame&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Stop&lt;/code&gt; es el que va a utilizar los frames que se han indicado como &lt;code&gt;canIdle&lt;/code&gt; y del set que se reprodujo ultimo.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;Stop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isTimeToUpdate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;sli&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;range&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lastSetPlayed&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+			&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;canIdle&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+				&lt;/span&gt;&lt;span class="n"&gt;sli&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sli&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+			&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sli&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;isTimeToUpdate&lt;/code&gt; usa la función &lt;code&gt;time.Since&lt;/code&gt; de Go, para comparar el tiempo que paso desde la ultima actualización de frames, y verificamos que sea mayor a los FPS deseados.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;isTimeToUpdate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Since&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lastUpdate&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Second&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Duration&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fps&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;AnimationSet&lt;/code&gt; se va a utilizar junto a &lt;code&gt;PlaySet&lt;/code&gt; para enviar las &lt;code&gt;sf.IntRect&lt;/code&gt; que contienen los &lt;code&gt;frame&lt;/code&gt;s indicados por &lt;code&gt;key&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre class="highlight go"&gt;&lt;code&gt;&lt;span class="k"&gt;func&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;animatedSprite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;AnimationSet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lastSetPlayed&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;rectSet&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IntRect&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="k"&gt;range&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;anim&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frames&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="x"&gt;
+		&lt;/span&gt;&lt;span class="n"&gt;rectSet&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="nb"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rectSet&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+	&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="x"&gt; &lt;/span&gt;&lt;span class="n"&gt;rectSet&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="x"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="y-por-ahora-eso-es-todo"&gt;Y por ahora eso es todo.&lt;/h3&gt;
+
+&lt;p&gt;Seguramente habrá muchas cosas de corregir, agregar y modificar a lo largo que siga trabajando en este paquete, y que me ire dando cuenta mientras lo utilice para alguno de mis proyectos.&lt;/p&gt;
+
+&lt;p&gt;En el siguiente articulo voy a mostrar un pequeño demo de esto.&lt;/p&gt;
+
+&lt;p&gt;Si queres comentar sobre esto, o cualquier cosa, hablame &lt;a href="http://twitter.com/GuilleGalizzi"&gt;por twitter&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Creando aplicaciones con Node-Webkit</title>
+    <link rel="alternate" href="http://blog.url.com/blog/Node-Webkit/"/>
+    <id>http://blog.url.com/blog/Node-Webkit/</id>
+    <published>2014-03-20T21:00:00-03:00</published>
+    <updated>2016-02-08T17:57:15-03:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;a href="https://github.com/rogerwang/node-webkit"&gt;Node-Webkit&lt;/a&gt; es una aplicación basada en &lt;strong&gt;Chromium&lt;/strong&gt; y &lt;strong&gt;Node.js&lt;/strong&gt; que te permite escribir aplicaciones nativas usando las tecnologías web.&lt;/p&gt;
+
+&lt;p&gt;Con &lt;strong&gt;Node-Webkit&lt;/strong&gt; podes escribir aplicaciones de escritorio usando HTML, CSS, JavaScript, y podes usar módulos de Node.js directamente en el DOM. Dado que las tecnologías web cada vez nos otorgan más control sobre nuestras aplicaciones web, esta la posibilidad de hacer aplicaciones de gran complejidad, que en un pasado cercano solo se hubiese pensado que serian cosas solamente posibles con lenguajes usados para hacer aplicaciones de escritorio.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Pero una desventaja común con aplicaciones webs, es que obviamente, necesitan conexión a internet, pero con Node-Webkit ahora podes usar estas poderosas tecnologías web para hacer aplicaciones de escritorio.&lt;/p&gt;
+
+&lt;p&gt;Node-Webkit utiliza un browser basado en &lt;strong&gt;Webkit&lt;/strong&gt; que fue extendido para poder controlar su interfaz, así permitiéndonos crear aplicaciones que verdaderamente parezca nativa. Además podés usar funciones de &lt;em&gt;Node.js&lt;/em&gt;, incrementando la variedad de funciones que podés utilizar para tu aplicación.&lt;/p&gt;
+
+&lt;h3 id="creando-una-aplicacin-simple"&gt;Creando una aplicación simple&lt;/h3&gt;
+
+&lt;p&gt;Las aplicaciones de node-webkit se crean similarmente a aplicaciones de Node, donde vas a tener un directorio que contenga los diferentes recursos - como HTML, CSS, JavaScript, imágenes, etc.&lt;/p&gt;
+
+&lt;p&gt;En este directorio también se debe ubicar el archivo &lt;strong&gt;package.json&lt;/strong&gt;, donde se describen ciertos aspectos de la aplicación, como el HTML por donde la aplicación debe comenzar, nombre y características de la ventana - tamaño, si deberá tener frames, toolbar, entre otras cosas.&lt;/p&gt;
+
+&lt;p&gt;El elemento "main" dentro de este archivo indica el primer archivo HTML que la aplicación debería mostrar, como "index.html", que podrá incluir links a las demás paginas de la aplicación, JavaScript y CSS.&lt;/p&gt;
+
+&lt;pre class="highlight json"&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;"name"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"App"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;"main"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="nt"&gt;"window"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"toolbar"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"frame"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"icon"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"icon.png"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"position"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;"center"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"width"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;560&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"height"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;570&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
+    &lt;/span&gt;&lt;span class="nt"&gt;"resizable"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="w"&gt;
+  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="usando-funciones-node"&gt;Usando funciones Node&lt;/h3&gt;
+
+&lt;p&gt;Podes incluir funciones y módulos de Node fácilmente. Al igual que con Node, podes instalar los módulos usando &lt;a href="https://www.npmjs.org"&gt;npm&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Luego node-webkit puede incluir cualquier módulo que se encuentre en el directorio &lt;code&gt;node_modules&lt;/code&gt; dentro de tu aplicación.&lt;/p&gt;
+
+&lt;p&gt;Por ejemplo podemos usar markdown:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;npm install markdown&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre class="highlight javascript"&gt;&lt;code&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;md&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'markdown'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;markdown&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;md&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toHTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hola __Mundo__!"&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="distribucin-de-tu-aplicacin"&gt;Distribución de tu aplicación&lt;/h3&gt;
+
+&lt;p&gt;Distribuir la aplicación es muy simple, solamente necesitas archivar los archivos de tu aplicación en formato ZIP.
+(Ejemplos de comandos siguientes basados en linea de comando de Linux o OSX)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;zip -r app.nw *&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Dale al archivo ZIP la extensión de .nw para reconocerlo como aplicación de Node-Webkit, y ahora podés ejecutar esa aplicación con Node-Webkit.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/bin/node-webkit/nw ~/app.nw&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;También podés simplemente decirle a Node-Webkit que abra tu directorio actual:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/bin/node-webkit/nw .&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Podés también empaquetar Node-Webkit y tu archivo .nw en un ejecutable para el usuario final. Aunque la manera recomendada es distribuir el directorio de tu aplicación junto con Node-Webkit, ya que al ejecutar node-webkit sin opciones o parámetros, buscara un package.json en el mismo directorio, luego simplemente modifica el ejecutable de node-webkit con el nombre que quieras y listo.&lt;/p&gt;
+
+&lt;h3 id="ltimas-notas-y-conclusion"&gt;Últimas notas y conclusion&lt;/h3&gt;
+
+&lt;p&gt;Poder crear aplicaciones de escritorio con las tecnologías web es un verdadero placer gracias a Node-Webkit, también podés combinarlo con Frameworks, personalmente creo que &lt;a href="http://angularjs.org/"&gt;Angular.js&lt;/a&gt; es una excelente opción para combinarlo con Node-Webkit.&lt;/p&gt;
+
+&lt;p&gt;Podés ver ejemplos de aplicaciones hechas en node-webkit en &lt;a href="https://github.com/zcbenz/nw-sample-apps"&gt;el repositorio del mismo.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Para que te des una idea de lo que se puede llegar a hacer con Node-Webkit también considera las siguientes aplicaciones:&lt;/p&gt;
+
+&lt;p&gt;El juego &lt;a href="http://www.greenheartgames.com"&gt;Game Dev Tycoon&lt;/a&gt; esta hecho con Node-Webkit.&lt;/p&gt;
+
+&lt;p&gt;Y el lector de feeds &lt;a href="http://sputnik.szwacz.com/"&gt;Sputnik&lt;/a&gt; también.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, si te interesa, podes ver un aplicación que cree en Node-Webkit junto a Angular.js, &lt;a href="https://github.com/GGalizzi/starlogger"&gt;Starlogger&lt;/a&gt;, hecha para el juego &lt;a href="http://playstarbound.com"&gt;Starbound.&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Agilizando la escritura de HTML con Emmet</title>
+    <link rel="alternate" href="http://blog.url.com/blog/Emmet/"/>
+    <id>http://blog.url.com/blog/Emmet/</id>
+    <published>2014-03-18T21:00:00-03:00</published>
+    <updated>2016-02-08T17:59:18-03:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Escribir HTML puede ser algo extremadamente rápido si usas &lt;a href="http://emmet.io"&gt;Emmet&lt;/a&gt;, un plugin para varios editores de textos y IDEs, como Sublime Text, Eclipse, TextMate, Brackets, NetBeans, Notepad++, VIM, y muchos otros.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;script type="text/javascript" src="https://asciinema.org/a/8289.js" id="asciicast-8289" async=""&gt;&lt;/script&gt;
+
+&lt;p&gt;La &lt;a href="http://docs.emmet.io/"&gt;documentación de emmet&lt;/a&gt; es muy completa y altamente recomendada de leer.&lt;/p&gt;
+
+&lt;p&gt;Como introducción intentemos escribir una pagina básica.&lt;/p&gt;
+
+&lt;pre class="highlight html"&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&lt;/span&gt; &lt;span class="na"&gt;lang=&lt;/span&gt;&lt;span class="s"&gt;"en"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;meta&lt;/span&gt; &lt;span class="na"&gt;charset=&lt;/span&gt;&lt;span class="s"&gt;"UTF-8"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;h1&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"title"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Bienvenidos a mi pagina&lt;span class="nt"&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;p&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"intro"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Acá podes encontrar información sobre los siguientes temas:&lt;span class="nt"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"nav"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Item 1&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Item 2&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Item 3&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Item 4&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Item 5&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+  
+&lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Todo esto, lo podes escribir de manera muy rápida usando las siguientes abreviaciones de emmet:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;html:5&amp;gt;h1.title{Bienvenidos a mi pagina}
++p.intro{Acá podes encontrar información sobre los siguientes temas:}
++ul.nav&amp;gt;li*5&amp;gt;a{Item $}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Con Emmet, escribís la abreviación y con la tecla de emmet (en mi caso, que uso VIM, como defecto es &lt;code&gt;ctrl+y+,&lt;/code&gt;), la abreviación se expande al HTML correspondiente.&lt;/p&gt;
+
+&lt;h3 id="vamos-por-parte"&gt;Vamos por parte&lt;/h3&gt;
+
+&lt;p&gt;La primera parte de la abreviación emmet es &lt;code&gt;html:5&lt;/code&gt;, esta abreviación crea la estructura básica de un documento HTML5.&lt;/p&gt;
+
+&lt;p&gt;Por lo tanto expandiendo &lt;code&gt;html:5&lt;/code&gt; se transforma en esto:&lt;/p&gt;
+
+&lt;pre class="highlight html"&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&lt;/span&gt; &lt;span class="na"&gt;lang=&lt;/span&gt;&lt;span class="s"&gt;"en"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;meta&lt;/span&gt; &lt;span class="na"&gt;charset=&lt;/span&gt;&lt;span class="s"&gt;"UTF-8"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  
+&lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Y al expandirse el cursor se queda dentro del tag &lt;code&gt;body&lt;/code&gt;, listo para ser editado con mas detalle. Dentro de ese mismo body podemos seguir usando abreviaciones de emmet, en el ejemplo lo hacemos todo en una sola línea. Al usar el operador &lt;code&gt;&amp;gt;&lt;/code&gt; estamos diciendo que el siguiente elemento será un hijo del anterior. Por lo tanto &lt;code&gt;html:5&amp;gt;h1.title&lt;/code&gt; indica que el &lt;code&gt;h1&lt;/code&gt; será hijo del body, además indicamos que &lt;code&gt;h1&lt;/code&gt; es de la clase &lt;code&gt;title&lt;/code&gt; con el operador  &lt;code&gt;.&lt;/code&gt;, también podemos usar &lt;code&gt;#&lt;/code&gt; para
+indicar un ID.&lt;/p&gt;
+
+&lt;p&gt;Luego usamos las llaves &lt;code&gt;{}&lt;/code&gt; para indicar el texto que va dentro del &lt;code&gt;h1&lt;/code&gt;, seguimos con el operador &lt;code&gt;+&lt;/code&gt; que indica hermanos de elementos, por lo tanto p será hermano de &lt;code&gt;h1&lt;/code&gt;, con clase intro, y el texto que ingresamos dentro de las llaves.&lt;/p&gt;
+
+&lt;p&gt;Con esta información ya podemos entender&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;html:5&amp;gt;h1.title{texto}
++p.intro{texto}+ul.nav&amp;gt;li&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Esto se expande a&lt;/p&gt;
+
+&lt;pre class="highlight html"&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&lt;/span&gt; &lt;span class="na"&gt;lang=&lt;/span&gt;&lt;span class="s"&gt;"en"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;meta&lt;/span&gt; &lt;span class="na"&gt;charset=&lt;/span&gt;&lt;span class="s"&gt;"UTF-8"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;h1&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"title"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;texto&lt;span class="nt"&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;p&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"intro"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;texto&lt;span class="nt"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"nav"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+  
+&lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Para crear varios elementos del mismo tipo, usamos el operador de multiplicación &lt;code&gt;*&lt;/code&gt;, para decir que queremos varios &lt;code&gt;li&lt;/code&gt;, finalmente a cada &lt;code&gt;li&lt;/code&gt; le damos un hijo &lt;code&gt;a&lt;/code&gt; con el texto &lt;code&gt;Item $&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;El operador &lt;code&gt;$&lt;/code&gt; se usa luego de usar el operador de multiplicación, que convierte su valor al número que corresponde del elemento.&lt;/p&gt;
+
+</content>
+  </entry>
+</feed>

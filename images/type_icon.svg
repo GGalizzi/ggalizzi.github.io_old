@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="103px" height="96px" viewBox="0 0 103 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.4 (17249) - http://www.bohemiancoding.com/sketch -->
+    <title>format-float-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M51,0 L102,48 L0,48 L51,0 Z M51,96 L102,48 L0,48 L51,96 Z" id="path-1"></path>
+    </defs>
+    <g id="Redesign" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-Copy-11" sketch:type="MSArtboardGroup" transform="translate(-1032.000000, -1311.000000)">
+            <g id="Skills" sketch:type="MSLayerGroup" transform="translate(-11.000000, 1224.000000)">
+                <g id="3--Typo" transform="translate(982.509766, 63.000000)">
+                    <g id="format-float-left" transform="translate(61.000000, 24.000000)">
+                        <g id="Triangle-1-Copy-3">
+                            <use fill="#68CDDF" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                            <use fill="none" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M29.5,41.0525745 L43.8509115,41.0525745 L43.8509115,55.3894851 L29.5,55.3894851 L29.5,41.0525745 L29.5,41.0525745 Z M29.5,31.4946341 L72.5527344,31.4946341 L72.5527344,36.2736043 L29.5,36.2736043 L29.5,31.4946341 L29.5,31.4946341 Z M72.5527344,41.0525745 L72.5527344,45.8315447 L48.6345486,45.8315447 L48.6345486,41.0525745 L72.5527344,41.0525745 L72.5527344,41.0525745 Z M72.5527344,50.6105149 L72.5527344,55.3894851 L48.6345486,55.3894851 L48.6345486,50.6105149 L72.5527344,50.6105149 L72.5527344,50.6105149 Z M29.5,60.1684553 L62.9854601,60.1684553 L62.9854601,64.9474255 L29.5,64.9474255 L29.5,60.1684553 L29.5,60.1684553 Z" id="Shape-Copy-3" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

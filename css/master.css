@@ -294,7 +294,7 @@ nav ul li a {
   min-height: 29.03em;
   height: 100vh;
   width: 100%;
-  background-image: url("/img/desk.jpg");
+  background-image: url("img/desk.jpg");
   background-size: cover;
   background-position: 0% 0%;
   background-attachment: fixed;
@@ -421,7 +421,7 @@ nav ul li a {
 }
 #trans-image {
   position: relative;
-  background: url("/img/laptop.jpg");
+  background: url("img/laptop.jpg");
   background-size: cover;
   background-position: 100% 85%;
   box-shadow: inset 0 0 5px #222;
